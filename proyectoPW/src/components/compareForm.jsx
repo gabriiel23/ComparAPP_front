@@ -1,6 +1,7 @@
 import React from "react";
-
+import { useFetchData } from "../hooks/useFectchData";
 function CompareForm(props) {
+
   return (
     <div className="flex flex-col items-center py-20">
       <h1
@@ -14,14 +15,16 @@ function CompareForm(props) {
           shadow-[0_0_10px_#fcf149]
           transition-shadow duration-300 ease-in-out
           hover:shadow-[0_0_20px_#fcf149]
-        ">
+        "
+      >
         Comparador de zapatos
       </h1>
 
       <div className="bg-gray-300 border-dashed border-2 border-black py-16 mt-16 w-1/2 text-center rounded-3xl">
         <p className="text-3xl mb-4">-- Añadir zapatos a comparar --</p>
-        <p class="text-center mb-8">Busca el zapatos que deseas comparar. <br />
-          A continuación, podrás ver las características de cada uno.
+        <p class="text-center mb-8">
+          Busca el zapatos que deseas comparar. <br />A continuación, podrás ver
+          las características de cada uno.
         </p>
         <form className="">
           <input
