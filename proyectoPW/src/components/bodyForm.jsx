@@ -1,10 +1,10 @@
 import React from "react";
 import { useFetchData } from "../hooks/useFectchData";
 const BodyForm = () => {
+
   const {
-    fetchData: { loading, code, message, data },
-  } = useFetchData({ endPoint: "shoes/getall" });
-  console.log("asdas", data);
+ 
+
   return (
     <section class=" bg-cover bg-no-repeat bg-[url('https://png.pngtree.com/background/20230611/original/pngtree-image-of-colorful-running-shoes-that-are-picture-image_3139634.jpg')] bg-gray-700 bg-blend-multiply w-full">
       <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
