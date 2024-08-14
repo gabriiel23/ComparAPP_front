@@ -3,7 +3,7 @@ import React from 'react';
 const AboutForm = () => {
     return (
         <div>
-            <div className="bg-cover bg-no-repeat bg-[url('./public/Back2.png')] w-full sm:px-48 px-6 sm:py-36 py-12">
+            <div className="bg-cover bg-no-repeat bg-[url('/Back2.png')] w-full sm:px-48 px-6 sm:py-36 py-12">
                 <div className="text-center justify-center items-center flex flex-wrap gap-3 text-white">
                     <p className="sm:text-2xl text-lg">Universidad Internacional del Ecuador</p>
                     <img width="36" height="36" src="https://img.icons8.com/color/48/ehcuador.png" alt="ecu" />
@@ -53,9 +53,9 @@ const AboutForm = () => {
 
                 <hr className="my-24"/>
 
-                <div className="flex flex-wrap sm:px-0 px-4">
-                    <div className="flex flex-col sm:flex-row gap-32">
-                        <div>
+                <div className="flex flex-wrap">
+                    <div className="flex flex-col sm:flex-row sm:gap-32 gap-20">
+                        <div data-aos="fade-right" className='sm:px-0 px-10'>
                             <img 
                                 className="hover:scale-125 ease-in duration-150 rounded-full border-double border-4 border-white shadow-2xl shadow-[#a0e8de]" 
                                 src="https://media-bog2-2.cdn.whatsapp.net/v/t61.24694-24/403907459_802850258311458_6423515825016807957_n.jpg?ccb=11-4&oh=01_Q5AaIMlcpONMq_gOchow3b-JZsc-e1TrmdCyZzRyXK5wmfkl&oe=66C3630A&_nc_sid=5e03e0&_nc_cat=111" 
@@ -63,7 +63,7 @@ const AboutForm = () => {
                             />
                         </div>
 
-                        <div>
+                        <div data-aos="fade-left" className='sm:px-0 px-4'>
                             <h1 className="text-5xl font-bold text-center text-[#fcf149]">Angel Sarango</h1> <br />
                             <p className="text-white sm:text-lg text-base">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem sed odio laboriosam ea id dignissimos quia? Numquam, magnam officia velit quod dolore fugit vitae molestias explicabo voluptates cum minus nesciunt! <br />
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio eligendi voluptatum tempora rerum, iure repellat et voluptates iusto sed, dignissimos aut ex nam nemo perferendis soluta officia dolorem maxime. Ab?
@@ -74,19 +74,19 @@ const AboutForm = () => {
 
                 <hr className="my-24"/>
 
-                <div className="flex flex-wrap sm:px-0 px-4">
-                    <div className="flex flex-col sm:flex-row gap-32">
-                        <div>
+                <div className="flex flex-wrap">
+                    <div className="flex flex-col sm:flex-row sm:gap-32 gap-20">
+                        <div className='sm:px-0 px-4'>
                             <h1 className="text-5xl font-bold text-center text-[#fcf149]">Gabriel Díaz</h1> <br />
                             <p className="text-white sm:text-lg text-base">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem sed odio laboriosam ea id dignissimos quia? Numquam, magnam officia velit quod dolore fugit vitae molestias explicabo voluptates cum minus nesciunt! <br />
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio eligendi voluptatum tempora rerum, iure repellat et voluptates iusto sed, dignissimos aut ex nam nemo perferendis soluta officia dolorem maxime. Ab?
                             </p>
                         </div>
 
-                        <div>
+                        <div className='sm:px-0 px-10'>
                             <img 
                                 className="hover:scale-125 ease-in duration-150 rounded-full border-double border-4 border-white shadow-2xl shadow-[#a0e8de]" 
-                                src="https://media-bog2-2.cdn.whatsapp.net/v/t61.24694-24/454063134_862712121944903_5526693609634257660_n.jpg?ccb=11-4&oh=01_Q5AaILE4zhwQRsWUoz6LQe1FwepG7U5h7Z4VKSFLaQChYo-o&oe=66C3AB6B&_nc_sid=5e03e0&_nc_cat=110" 
+                                src="https://media-bog2-2.cdn.whatsapp.net/v/t61.24694-24/454637400_898938408685638_1942642901733259627_n.jpg?ccb=11-4&oh=01_Q5AaIHHaQyfQ8N7cdOrmH1AcrSteBVnIooW7l_nf2nIfyHg5&oe=66C93326&_nc_sid=5e03e0&_nc_cat=108" 
                                 alt="gabriel" 
                             />
                         </div>

@@ -18,7 +18,7 @@ const BodyForm = () => {
           <br /> En esta aplicación podrás comparar zapatos en diferentes
           tiendas
         </p>
-        <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
+        <div animate-slide-in-left className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
           <button className="button text-black">
             Comparar
             <svg
@@ -66,14 +66,14 @@ const BodyForm = () => {
 
       <div className="bg-white flex flex-wrap">
         <img
-          src="./public/lineas.png"
+          src="/lineas.png"
           className="sm:py-14 py-8 sm:px-10 px-6"
           alt="separatorS"
         />
 
         <div className="flex sm:flex-row flex-col w-full sm:px-40 ">
           <div className="sm:w-[50%] flex justify-center">
-            <img src="./public/zapas.png" className="w-72" alt="" />
+            <img src="/zapas.png" className="w-72" alt="" />
           </div>
 
           <div className="sm:w-[80%] sm:px-0 px-6">
@@ -99,7 +99,7 @@ const BodyForm = () => {
           </div>
         </div>
         <img
-          src="./public/lineas.png"
+          src="/lineas.png"
           className="sm:py-14 py-8 sm:px-10 px-6"
           alt="separatorF"
         />

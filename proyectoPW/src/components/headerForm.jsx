@@ -23,6 +23,8 @@ const HeaderForm = () => {
                         <input type="text" id="search-navbar" className="block w-full p-2 ps-10 text-sm text-black border border-[#faef57] rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 " placeholder="Buscar..."/>
                     </div>
 
+                    <Link to="/login" className="sm:ml-4 sm:mb-0 mb-2 sm:inline-flex hidden items-top sm:px-4 px-3 sm:py-2 py-1 border border-transparent sm:text-sm text-xs font-medium rounded-lg bg-[#fcf149] hover:bg-[#b3ad51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400">Iniciar Sesión</Link>
+
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         data-collapse-toggle="navbar-search"

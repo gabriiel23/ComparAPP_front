@@ -9,9 +9,11 @@ import AboutForm from "../components/aboutForm";
 import Login from "../components/loginForm"
 import Register from "../components/registerForm";
 
+
 const Formpages = () => {
   return (
-    <div class="font-serif">
+    <div className="font-serif">
+      
       <HeaderForm />
         <Routes>
           <Route path="/" element={<BodyForm />} />
