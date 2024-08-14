@@ -21,7 +21,7 @@ const opciones = [
 
 const StoresForm = () => {
     return (
-        <div className='content-center px-48 py-12'>
+        <div className='content-center sm:px-48 sm:py-12'>
             <hr className='border-black' />
 
             <div className='flex items-center justify-center py-8'>
@@ -43,7 +43,7 @@ const StoresForm = () => {
             <hr className='border-black' />
 
             <div>
-                <p className='text-base py-8 px-48 text-center'>
+                <p className='text-base py-8 sm:px-48 px-6 text-center'>
                     ¡Mira los zapatos que ofrecen diferentes tiendas! <br />
                     Existe gran variedad de tiendas donde podrás ver los zapatos que más te gusten con sus características. <br />
                     No pierdas más el tiempo y revisa, ¡Tus zapatos están esperando por ti!

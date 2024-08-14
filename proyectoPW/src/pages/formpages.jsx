@@ -5,7 +5,6 @@ import FooterForm from "../components/footerForm";
 import BodyForm from "../components/bodyForm";
 import TiendasForm from "../components/storesForm";
 import CompararForm from "../components/compareForm";
-import OfertasForm from "../components/ofertsForm";
 import AboutForm from "../components/aboutForm";
 import Login from "../components/loginForm"
 import Register from "../components/registerForm";
@@ -18,7 +17,6 @@ const Formpages = () => {
           <Route path="/" element={<BodyForm />} />
           <Route path="/comparar" element={<CompararForm />} />
           <Route path="/tiendas" element={<TiendasForm />} />
-          <Route path="/ofertas" element={<OfertasForm />} />
           <Route path="/about" element={<AboutForm />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

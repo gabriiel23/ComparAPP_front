@@ -3,23 +3,23 @@ import React from 'react';
 const AboutForm = () => {
     return (
         <div>
-            <div className="container py-36 px-48 ">
-                <div className="text-center justify-center items-center flex flex-wrap gap-3 text-white ">
-                    <p className="text-2xl">Universidad Internacional del Ecuador</p>
+            <div className="bg-cover bg-no-repeat bg-[url('./public/Back2.png')] w-full sm:px-48 px-6 sm:py-36 py-12">
+                <div className="text-center justify-center items-center flex flex-wrap gap-3 text-white">
+                    <p className="sm:text-2xl text-lg">Universidad Internacional del Ecuador</p>
                     <img width="36" height="36" src="https://img.icons8.com/color/48/ehcuador.png" alt="ecu" />
                 </div>
-                <div class=" flex flex-wrap justify-center py-6 text-center">
-                    <h1 className="text-8xl font-bold text-[#fcf149]">¿Quiénes Somos?</h1>
-                    <p class="text-white text-lg pt-10">
+                <div className="flex flex-wrap justify-center py-6 text-center">
+                    <h1 className="sm:text-8xl text-4xl font-bold text-[#fcf149]">¿Quiénes Somos?</h1>
+                    <p className="text-white sm:text-lg text-base pt-10">
                         Somos estudiantes de la carrera de Tecnologías de la Información y Comunicación de <br />
                         la Universidad Internacional del Ecuador (UIDE) de la sede Loja <br />
-                        Actualmente estamos en cuarto semestre. Como parte de nuestra materia de Programacion Web, <br />
+                        Actualmente estamos en cuarto semestre. Como parte de nuestra materia de Programación Web, <br />
                         surge este proyecto de "Comparación de Zapatos". <br />
-                        Mas abajo podrás encontrar mas informarción acerca de nosotros.
+                        Más abajo podrás encontrar más información acerca de nosotros.
                     </p>
                 </div>
                 <section className="flex justify-center items-center pt-8">
-                    <button
+                    <a
                         href="/"
                         className="group flex justify-center p-2 rounded-md drop-shadow-xl from-gray-800 bg-[#fcf149] text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:from-[#331029] hover:to-[#310413]"
                     >
@@ -48,44 +48,44 @@ const AboutForm = () => {
                         >
                             Ubicación
                         </span>
-                    </button>
+                    </a>
                 </section>
 
-                <hr class="my-24"/>
+                <hr className="my-24"/>
 
-                <div class="flex flex-wrap">
-                    <div class="flex flex-row gap-32">
+                <div className="flex flex-wrap sm:px-0 px-4">
+                    <div className="flex flex-col sm:flex-row gap-32">
                         <div>
                             <img 
-                                class="hover:scale-125 ease-in duration-150 rounded-full border-double border-4 border-white shadow-2xl shadow-[#a0e8de]" 
+                                className="hover:scale-125 ease-in duration-150 rounded-full border-double border-4 border-white shadow-2xl shadow-[#a0e8de]" 
                                 src="https://media-bog2-2.cdn.whatsapp.net/v/t61.24694-24/403907459_802850258311458_6423515825016807957_n.jpg?ccb=11-4&oh=01_Q5AaIMlcpONMq_gOchow3b-JZsc-e1TrmdCyZzRyXK5wmfkl&oe=66C3630A&_nc_sid=5e03e0&_nc_cat=111" 
                                 alt="angel" 
                             />
                         </div>
 
-                        <div class="">
-                            <h1 class="text-5xl font-bold text-center text-[#fcf149]">Angel Sarango</h1> <br />
-                            <p class="text-white text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem sed odio laboriosam ea id dignissimos quia? Numquam, magnam officia velit quod dolore fugit vitae molestias explicabo voluptates cum minus nesciunt! <br />
+                        <div>
+                            <h1 className="text-5xl font-bold text-center text-[#fcf149]">Angel Sarango</h1> <br />
+                            <p className="text-white sm:text-lg text-base">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem sed odio laboriosam ea id dignissimos quia? Numquam, magnam officia velit quod dolore fugit vitae molestias explicabo voluptates cum minus nesciunt! <br />
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio eligendi voluptatum tempora rerum, iure repellat et voluptates iusto sed, dignissimos aut ex nam nemo perferendis soluta officia dolorem maxime. Ab?
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <hr class="my-24"/>
+                <hr className="my-24"/>
 
-                <div class="flex flex-wrap">
-                    <div class="flex flex-row gap-32">
-                        <div class="">
-                            <h1 class="text-5xl font-bold text-center text-[#fcf149]">Gabriel Díaz</h1> <br />
-                            <p class="text-white text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem sed odio laboriosam ea id dignissimos quia? Numquam, magnam officia velit quod dolore fugit vitae molestias explicabo voluptates cum minus nesciunt! <br />
+                <div className="flex flex-wrap sm:px-0 px-4">
+                    <div className="flex flex-col sm:flex-row gap-32">
+                        <div>
+                            <h1 className="text-5xl font-bold text-center text-[#fcf149]">Gabriel Díaz</h1> <br />
+                            <p className="text-white sm:text-lg text-base">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem sed odio laboriosam ea id dignissimos quia? Numquam, magnam officia velit quod dolore fugit vitae molestias explicabo voluptates cum minus nesciunt! <br />
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio eligendi voluptatum tempora rerum, iure repellat et voluptates iusto sed, dignissimos aut ex nam nemo perferendis soluta officia dolorem maxime. Ab?
                             </p>
                         </div>
 
                         <div>
                             <img 
-                                class="hover:scale-125 ease-in duration-150 rounded-full border-double border-4 border-white shadow-2xl shadow-[#a0e8de]" 
+                                className="hover:scale-125 ease-in duration-150 rounded-full border-double border-4 border-white shadow-2xl shadow-[#a0e8de]" 
                                 src="https://media-bog2-2.cdn.whatsapp.net/v/t61.24694-24/454063134_862712121944903_5526693609634257660_n.jpg?ccb=11-4&oh=01_Q5AaILE4zhwQRsWUoz6LQe1FwepG7U5h7Z4VKSFLaQChYo-o&oe=66C3AB6B&_nc_sid=5e03e0&_nc_cat=110" 
                                 alt="gabriel" 
                             />
@@ -93,7 +93,7 @@ const AboutForm = () => {
                     </div>
                 </div>
                 
-                <hr class="mt-24"/>
+                <hr className="mt-24"/>
 
             </div>
         </div>
