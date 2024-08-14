@@ -2,8 +2,8 @@ import React from "react";
 import { useFetchData } from "../hooks/useFectchData";
 
 const BodyForm = () => {
-  const {
-    fetchData: { loading, code, message, data },
+
+  const {fetchData: { loading, code, message, data },
   } = useFetchData({ endPoint: "shoes/getall" });
   console.log("asdas", data);
 
