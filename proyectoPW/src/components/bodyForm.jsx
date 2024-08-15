@@ -18,7 +18,7 @@ const BodyForm = () => {
           <br /> En esta aplicación podrás comparar zapatos en diferentes
           tiendas
         </p>
-        <div animate-slide-in-left className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
+        <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
           <button className="button text-black">
             Comparar
             <svg
@@ -56,7 +56,7 @@ const BodyForm = () => {
             </div>
             <input
               type="text"
-              id="search-navbar"
+              id="barraBusqueda"
               className="block p-4 w-96 ps-10 text-sm text-black border rounded-lg bg-gray-50 dark:bg-white dark:border-black dark:placeholder-black dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Buscar tienda..."
             />

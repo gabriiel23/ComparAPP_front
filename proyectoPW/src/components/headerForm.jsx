@@ -5,25 +5,20 @@ const HeaderForm = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <nav className="bg-white dark:bg-black">
+        <nav className="bg-black">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-6">
                 <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src="https://i.pinimg.com/564x/f8/c9/00/f8c90079ddaeb7b1ec1ceddeda867471.jpg" className="h-10 rounded-lg" alt="Flowbite Logo" />
-                    <span className="self-center text-[28px] font-semibold whitespace-nowrap dark:text-white">ComparAPP</span>
+                    <span className="self-center text-[28px] font-semibold whitespace-nowrap text-white">ComparAPP</span>
                 </Link>
 
                 <div className="sm:flex items-center sm:order-2">
-                    <div className="relative hidden sm:block">
-                        <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            <svg className="w-4 h-4 text-gray-500 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                            </svg>
-                            <span className="sr-only">Search icon</span>
-                        </div>
-                        <input type="text" id="search-navbar" className="block w-full p-2 ps-10 text-sm text-black border border-[#faef57] rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 " placeholder="Buscar..."/>
-                    </div>
+                    
 
-                    <Link to="/login" className="sm:ml-4 sm:mb-0 mb-2 sm:inline-flex hidden items-top sm:px-4 px-3 sm:py-2 py-1 border border-transparent sm:text-sm text-xs font-medium rounded-lg bg-[#fcf149] hover:bg-[#b3ad51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400">Iniciar Sesión</Link>
+                    <Link to="/login" className="sm:ml-4 sm:mb-0 mb-2 sm:inline-flex hidden items-top sm:px-4 px-3 sm:py-2 py-1 border border-[#fcf149] sm:text-sm text-xs font-medium rounded-lg bg-black text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400">Iniciar Sesión</Link>
+
+                    <Link to="/register" className="sm:ml-4 sm:mb-0 mb-2 sm:inline-flex hidden items-top sm:px-4 px-3 sm:py-2 py-1 border border-[#fcf149] sm:text-sm text-xs font-medium rounded-lg bg-black text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400">Registrarse</Link>
+
 
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -47,25 +42,28 @@ const HeaderForm = () => {
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
-                        <input type="text" id="search-navbar" className="block w-full p-2 ps-10 text-sm text-black border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-600 dark:placeholder-black dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar..."/>
+                        <input type="text" id="searchR" className="block w-full p-2 ps-10 text-sm text-white border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 " placeholder="Buscar..."/>
                     </div>
 
-                    <ul className="text-lg flex flex-col p-4 sm:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 sm:space-x-8 rtl:space-x-reverse sm:flex-row sm:mt-0 sm:border-0 sm:bg-white dark:bg-black dark:border-gray-700">
+                    <ul className="text-lg flex flex-col p-4 sm:p-0 mt-4 font-medium border border-gray-100 rounded-lg sm:space-x-8 rtl:space-x-reverse sm:flex-row sm:mt-0 sm:border-0 bg-black">
                         <li>
                             <Link to="/" className="block py-2 px-3 text-white rounded sm:bg-transparent sm:text-[#faef57] sm:p-0 hover:bg-gray-700 sm:hover:bg-transparent" aria-current="page">Inicio</Link>
                         </li>
                         <li>
-                            <Link to="/comparar" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 sm:hover:bg-transparent sm:hover:text-blue-700 sm:p-0 sm:dark:hover:text-[#faef57] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white sm:dark:hover:bg-transparent dark:border-gray-700">Comparar</Link>
+                            <Link to="/comparar" className="block py-2 px-3 text-white rounded hover:bg-gray-700 sm:hover:bg-transparent sm:hover:text-[#faef57] sm:p-0">Comparar</Link>
                         </li>
                         <li>
-                            <Link to="/tiendas" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 sm:hover:bg-transparent sm:hover:text-blue-700 sm:p-0 sm:dark:hover:text-[#faef57] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white sm:dark:hover:bg-transparent dark:border-gray-700">Tiendas</Link>
+                            <Link to="/tiendas" className="block py-2 px-3 text-white rounded hover:bg-gray-700 sm:hover:bg-transparent sm:hover:text-[#faef57] sm:p-0">Tiendas</Link>
                         </li>
                         <li>
-                            <Link to="/about" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 sm:hover:bg-transparent sm:hover:text-blue-700 sm:p-0 sm:dark:hover:text-[#faef57] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white sm:dark:hover:bg-transparent dark:border-gray-700">Sobre nosotros</Link>
+                            <Link to="/about" className="block py-2 px-3 text-white rounded hover:bg-gray-700 sm:hover:bg-transparent sm:hover:text-[#faef57] sm:p-0">Sobre nosotros</Link>
                         </li>
                         {/* Aquí se añade el botón de Iniciar Sesión cuando el menú está abierto en dispositivos pequeños */}
                         <li className="sm:hidden mt-4">
-                            <Link to="/login" className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg bg-[#fcf149] hover:bg-[#b3ad51] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400">Iniciar Sesión</Link>
+                            <Link to="/login" className="text-white inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg bg-black hover:bg-gray-800 border-[#fcf149] focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#dcd23b]">Iniciar Sesión</Link>
+                        </li>
+                        <li className="sm:hidden mt-4">
+                            <Link to="/register" className="text-white inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg bg-black hover:bg-gray-800 border-[#fcf149] focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#dcd23b]">Registrarse</Link>
                         </li>
                     </ul>
                 </div>

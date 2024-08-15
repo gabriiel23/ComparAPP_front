@@ -15,6 +15,7 @@ const Formpages = () => {
     <div className="font-serif">
       
       <HeaderForm />
+
         <Routes>
           <Route path="/" element={<BodyForm />} />
           <Route path="/comparar" element={<CompararForm />} />
@@ -23,6 +24,7 @@ const Formpages = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
+        
       <FooterForm />
     </div>
   );

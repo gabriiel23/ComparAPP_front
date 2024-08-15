@@ -1,7 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
-const LoginForm = () => {
+const LoginForm= () => {
+    
+    const { register, handleSubmit } = useForm();
+
+    const onSubmitLogin = (data) => {
+        console.log(data)
+    };
+
     return (
         <div className="bg-white">
             <div className="flex justify-center h-screen">
@@ -33,14 +41,14 @@ const LoginForm = () => {
                         </div>
 
                         <div className="mt-8">
-                            <form>
+                            <form onSubmit={handleSubmit(onSubmitLogin)}>
                                 <div>
-                                    <label htmlFor="email" className="block mb-2 text-base text-black">Correo electrónico</label>
+                                    <label htmlFor="email" className="block mb-2 text-base text-black">Nombre de usuario</label>
                                     <input
-                                        type="email"
-                                        name="email"
-                                        id="email"
-                                        placeholder="example@example.com"
+                                        {...register('username')}
+                                        type="text"
+                                        name="username"
+                                        placeholder="username"
                                         className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                                     />
                                 </div>
@@ -50,10 +58,10 @@ const LoginForm = () => {
                                         <label htmlFor="password" className="text-base text-black">Contraseña</label>
                                     </div>
                                     <input
+                                        {...register('password')}
                                         type="password"
                                         name="password"
-                                        id="password"
-                                        placeholder="contraseña"
+                                        placeholder="password"
                                         className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                                     />
                                 </div>

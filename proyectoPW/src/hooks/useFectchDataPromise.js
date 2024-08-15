@@ -1,5 +1,7 @@
 export const useFetchDataPromise = () => {
+    
     const getFetchData = async ({ endPoint, method = "POST", additionalData }) => {
+
         const urlApi = `${import.meta.env.VITE_API_URL}/${endPoint}`;
       
         try {
