@@ -18,7 +18,7 @@ const StoresForm = () => {
       endPoint: `storeshoes/${store_id}`,
       method: "POST",
       additionalData: {
-        store_id: store_id,
+        store_id: store_id, // Asegúrate de que `idCiudad` sea el identificador correcto
       },
     });
 
