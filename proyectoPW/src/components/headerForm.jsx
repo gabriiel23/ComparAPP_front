@@ -5,11 +5,11 @@ const HeaderForm = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <nav className="bg-white dark:bg-black">
+        <nav className="bg-black">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-6">
                 <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src="https://i.pinimg.com/564x/f8/c9/00/f8c90079ddaeb7b1ec1ceddeda867471.jpg" className="h-10 rounded-lg" alt="Flowbite Logo" />
-                    <span className="self-center text-[28px] font-semibold whitespace-nowrap dark:text-white">ComparAPP</span>
+                    <span className="self-center text-[28px] font-semibold whitespace-nowrap text-white">ComparAPP</span>
                 </Link>
 
                 <div className="sm:flex items-center sm:order-2">
@@ -42,24 +42,24 @@ const HeaderForm = () => {
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
-                        <input type="text" id="searchR" className="block w-full p-2 ps-10 text-sm text-black border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-600 dark:placeholder-black dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar..."/>
+                        <input type="text" id="searchR" className="block w-full p-2 ps-10 text-sm text-black border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Buscar..."/>
                     </div>
 
-                    <ul className="text-lg flex flex-col p-4 sm:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 sm:space-x-8 rtl:space-x-reverse sm:flex-row sm:mt-0 sm:border-0 sm:bg-white dark:bg-black dark:border-gray-700">
+                    <ul className="text-lg flex flex-col p-4 sm:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-black sm:space-x-8 rtl:space-x-reverse sm:flex-row sm:mt-0 sm:border-0">
                         <li>
                             <Link to="/" className="block py-2 px-3 text-white rounded sm:bg-transparent sm:text-[#faef57] sm:p-0 hover:bg-gray-700 sm:hover:bg-transparent" aria-current="page">Inicio</Link>
                         </li>
                         <li>
-                            <Link to="/comparar" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 sm:hover:bg-transparent sm:hover:text-blue-700 sm:p-0 sm:dark:hover:text-[#faef57] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white sm:dark:hover:bg-transparent dark:border-gray-700">Comparar</Link>
+                            <Link to="/comparar" className="block py-2 px-3 text-white rounded hover:bg-gray-700 sm:hover:bg-transparent sm:hover:text-[#faef57] sm:p-0 ">Comparar</Link>
                         </li>
                         <li>
-                            <Link to="/tiendas" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 sm:hover:bg-transparent sm:hover:text-blue-700 sm:p-0 sm:dark:hover:text-[#faef57] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white sm:dark:hover:bg-transparent dark:border-gray-700">Tiendas</Link>
+                            <Link to="/tiendas" className="block py-2 px-3 text-white rounded hover:bg-gray-700 sm:hover:bg-transparent sm:hover:text-[#faef57] sm:p-0 ">Tiendas</Link>
                         </li>
                         <li>
-                            <Link to="/zapatos" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 sm:hover:bg-transparent sm:hover:text-blue-700 sm:p-0 sm:dark:hover:text-[#faef57] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white sm:dark:hover:bg-transparent dark:border-gray-700">Zapatos</Link>
+                            <Link to="/zapatos" className="block py-2 px-3 text-white rounded hover:bg-gray-700 sm:hover:bg-transparent sm:hover:text-[#faef57] sm:p-0 ">Zapatos</Link>
                         </li>
                         <li>
-                            <Link to="/about" className="block pt-2 px-3 text-gray-900 rounded hover:bg-gray-100 sm:hover:bg-transparent sm:hover:text-blue-700 sm:p-0 sm:dark:hover:text-[#faef57] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white sm:dark:hover:bg-transparent dark:border-gray-700">Sobre nosotros</Link>
+                            <Link to="/about" className="block pt-2 px-3 text-white rounded hover:bg-gray-700 sm:hover:bg-transparent sm:hover:text-[#faef57] sm:p-0 ">Sobre nosotros</Link>
                         </li>
                         {/* Aquí se añade el botón de Iniciar Sesión cuando el menú está abierto en dispositivos pequeños */}
                         <li className="sm:hidden mt-4">
