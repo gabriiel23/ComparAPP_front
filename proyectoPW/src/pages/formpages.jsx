@@ -6,6 +6,7 @@ import FooterForm from "../components/footerForm";
 
 import CompararForm from "../components/compareForm"; 
 import TiendasForm from "../components/storesForm";
+import ShoeStore from "../components/shoeByStore";
 import ShoesForm from "../components/shoesForm";
 import AboutForm from "../components/aboutForm";
 
@@ -23,6 +24,7 @@ const Formpages = () => {
           <Route path="/" element={<BodyForm />} />
           <Route path="/comparar" element={<CompararForm />} />
           <Route path="/tiendas" element={<TiendasForm />} />
+          <Route path="/shoeStore" element={<ShoeStore />} />
           <Route path="/zapatos" element={<ShoesForm />} />
           <Route path="/about" element={<AboutForm />} />
           <Route path="/login" element={<Login />} />

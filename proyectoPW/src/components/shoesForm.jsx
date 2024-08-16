@@ -20,12 +20,12 @@ const ShoesForm = () => {
         <div className="relative z-10">
           <h1
             id="tituloo"
-            className="text-4xl sm:text-6xl text-center font-extrabold tracking-tight leading-none text-gray-200 relative"
+            className="text-4xl sm:text-6xl text-center font-extrabold tracking-tight leading-none text-[#fcf149] relative"
           >
             ZAPATOS
           </h1>
-          <span className="absolute inset-0 bg-[#fcf149] opacity-30 blur-md rounded-lg -z-10"></span>
-          <span className="absolute inset-0 bg-[#fcf149] opacity-40 blur-md rounded-lg scale-105 transform -z-20"></span>
+          <span className="absolute inset-0 bg-black opacity-100 blur-md rounded-lg -z-10"></span>
+          <span className="absolute inset-0 bg-black opacity-100 blur-md rounded-lg scale-105 transform -z-20"></span>
         </div>
       </div>
 
