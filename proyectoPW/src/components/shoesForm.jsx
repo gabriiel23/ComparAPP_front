@@ -41,7 +41,7 @@ const ShoesForm = () => {
               alt={item.name}
             />
             <h5 className="mx-4 mb-4 text-xl text-center font-semibold tracking-tight text-[#fcf149]">
-              {item.name}
+              {item.shoe_name}
             </h5>
             <div className="px-6">
               <h5 className="mb-2 text-base font-semibold tracking-tight text-white">
