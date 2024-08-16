@@ -58,7 +58,7 @@ const ShoeByStore = () => {
                 {" "}
                 <span className="text-gray-400">Marca:</span> {shoe.brand_name}
               </h5>
-              <h5 className="text-3xl text-center font-bold text-green-700 pb-8">
+              <h5 className="text-3xl text-center font-bold text-green-500 pb-8">
                 <br /> ${shoe.price}
               </h5>
             </div>

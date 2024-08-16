@@ -87,14 +87,14 @@ function CompareForm(props) {
 
             {/* Sugerencias */}
             {suggestions.length > 0 && (
-              <ul className="absolute top-full left-0 w-full bg-white border border-[#fcf149] rounded-full mt-2 z-10">
+              <ul className="absolute top-full left-0 w-full bg-white border border-[#fcf149] rounded-md mt-2 z-10">
                 {suggestions.map((shoe) => (
                   <li
                     key={shoe.id}
                     onClick={() => handleShoeSelect(shoe)}
                     className="flex items-center p-2 cursor-pointer hover:bg-gray-200 hover:rounded-full"
                   >
-                    <img src={shoe.image_url} alt={shoe.name} className="h-8 w-8 mr-2 rounded-full " />
+                    <img src={shoe.image_url} alt={shoe.name} className="h-8 w-8 mr-2 rounded-sm " />
                     {shoe.name}
                   </li>
                 ))}
@@ -147,7 +147,7 @@ function CompareForm(props) {
                   <h5 className="text-base font-semibold tracking-tight text-black">
                     <span className='text-gray-600'>Flexibilidad:</span> {shoe.flexibility}
                   </h5>
-                  <h5 className="text-4xl text-center font-bold text-green-700 pb-8">${shoe.price}</h5>
+                  <h5 className="text-4xl text-center font-bold text-green-500 pb-8">${shoe.price}</h5>
                 </div>
               </div>
             ))}

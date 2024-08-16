@@ -57,7 +57,7 @@ const ShoesForm = () => {
                 {" "}
                 <span className="text-gray-400">Tienda:</span> {item.store_name}
               </h5>
-              <h5 className="text-3xl text-center font-bold text-green-700 pb-8">
+              <h5 className="text-3xl text-center font-bold text-green-500 pb-8">
                 <br /> ${item.price}
               </h5>
             </div>
