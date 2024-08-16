@@ -41,7 +41,7 @@ const ShoesForm = () => {
               alt={item.name}
             />
             <h5 className="mx-4 mb-4 text-xl text-center font-semibold tracking-tight text-[#fcf149]">
-              {item.shoe_name}
+              {item.name}
             </h5>
             <div className="px-6">
               <h5 className="mb-2 text-base font-semibold tracking-tight text-white">
@@ -53,7 +53,10 @@ const ShoesForm = () => {
                 <span className="text-gray-400">Categoría:</span>{" "}
                 {item.category_name}
               </h5>
-
+              <h5 className="text-base font-semibold tracking-tight text-white">
+                {" "}
+                <span className="text-gray-400">Tienda:</span> {item.store_name}
+              </h5>
               <h5 className="text-3xl text-center font-bold text-green-700 pb-8">
                 <br /> ${item.price}
               </h5>
