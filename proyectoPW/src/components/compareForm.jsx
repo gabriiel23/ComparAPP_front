@@ -7,7 +7,7 @@ import Message from './messages/messages';
 function CompareForm(props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [selectedShoe, setSelectedShoe] = useState(null);
+  const [selectedShoes, setSelectedShoes] = useState([]);
 
   const { fetchData: { loading, code, message, data } } = useFetchData({ endPoint: "shoes/getAll" });
 
@@ -21,6 +21,18 @@ function CompareForm(props) {
       setSuggestions([]);
     }
   }, [searchTerm, data]);
+
+  const handleShoeSelect = (shoe) => {
+    if (selectedShoes.length < 3) {
+      setSelectedShoes([...selectedShoes, shoe]);
+    }
+    setSearchTerm("");
+    setSuggestions([]);
+  };
+
+  const handleRemoveShoe = (shoeId) => {
+    setSelectedShoes(selectedShoes.filter(shoe => shoe.id !== shoeId));
+  };
 
   if (loading) return <Loading />;
   if (code !== "COD_OK") return <ErrorMessage message={message} />;
@@ -75,17 +87,14 @@ function CompareForm(props) {
 
             {/* Sugerencias */}
             {suggestions.length > 0 && (
-              <ul className="absolute top-full left-0 w-full bg-white border border-gray-400 rounded-lg mt-2 z-10">
+              <ul className="absolute top-full left-0 w-full bg-white border border-[#fcf149] rounded-full mt-2 z-10">
                 {suggestions.map((shoe) => (
                   <li
                     key={shoe.id}
-                    onClick={() => {
-                      setSelectedShoe(shoe);
-                      setSearchTerm("");
-                      setSuggestions([]);
-                    }}
-                    className="p-2 cursor-pointer hover:bg-gray-100"
+                    onClick={() => handleShoeSelect(shoe)}
+                    className="flex items-center p-2 cursor-pointer hover:bg-gray-200 hover:rounded-full"
                   >
+                    <img src={shoe.image_url} alt={shoe.name} className="h-8 w-8 mr-2 rounded-full " />
                     {shoe.name}
                   </li>
                 ))}
@@ -94,54 +103,54 @@ function CompareForm(props) {
           </div>
         </div>
 
-        {/* Tarjeta del zapato seleccionado */}
-        {selectedShoe && (
+        {/* Tarjetas de zapatos seleccionados */}
+        {selectedShoes.length > 0 && (
           <div className="flex flex-wrap justify-center gap-8 pb-16 sm:px-48 px-0 pt-12">
-            <div className="relative w-80 bg-white border border-[#fcf149] rounded-3xl shadow" key={selectedShoe.id}>
-              
-              {/* Botón para quitar la tarjeta */}
-              <button
-                onClick={() => setSelectedShoe(null)}
-                className="absolute top-2 right-2 text-gray-400 hover:text-gray-600"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+            {selectedShoes.map((shoe) => (
+              <div className="relative w-80 bg-white border border-[#fcf149] rounded-3xl shadow" key={shoe.id}>
 
-              <div className="flex justify-center">
-                <img className="m-8 rounded-3xl border-2 border-black" src="{LAURLIMAGEN}" alt="imagen" />
+                {/* Botón de cierre */}
+                <button
+                  onClick={() => handleRemoveShoe(shoe.id)}
+                  className="absolute top-2 right-2 bg-red-600 text-white p-[6px] rounded-full hover:bg-red-700 transition-all"
+                >
+                  &times;
+                </button>
+
+                <div className="flex justify-center">
+                  <img className="m-8 rounded-3xl border-2 border-black" src={shoe.image_url} alt={shoe.name} />
+                </div>
+
+                <h5 className="mx-4 mb-4 text-[28px] text-center font-bold tracking-tight text-black">{shoe.name}</h5>
+
+                <div className="px-6">
+                  <h5 className="mb-2 text-base font-semibold tracking-tight text-black">
+                    <span className='text-gray-600'>Marca:</span> {shoe.brand_id}
+                  </h5>
+                  <h5 className="mb-2 text-base font-semibold tracking-tight text-black">
+                    <span className='text-gray-600'>Categoría:</span> {shoe.category_name}
+                  </h5>
+                  <h5 className="text-base font-semibold tracking-tight text-black">
+                    <span className='text-gray-600'>Tienda:</span> {shoe.store}
+                  </h5>
+
+                  <h5 className="my-4 text-xl font-semibold tracking-tight text-black">Características</h5>
+                  <h5 className="mb-2 text-base font-semibold tracking-tight text-black">
+                    <span className='text-gray-600'>Ligereza:</span> {shoe.lightness}
+                  </h5>
+                  <h5 className="mb-2 text-base font-semibold tracking-tight text-black">
+                    <span className='text-gray-600'>Agarre:</span> {shoe.grip}
+                  </h5>
+                  <h5 className="mb-2 text-base font-semibold tracking-tight text-black">
+                    <span className='text-gray-600'>Amortiguación:</span> {shoe.cushioning}
+                  </h5>
+                  <h5 className="text-base font-semibold tracking-tight text-black">
+                    <span className='text-gray-600'>Flexibilidad:</span> {shoe.flexibility}
+                  </h5>
+                  <h5 className="text-4xl text-center font-bold text-green-700 pb-8">${shoe.price}</h5>
+                </div>
               </div>
-
-              <h5 className="mx-4 mb-4 text-[28px] text-center font-bold tracking-tight text-black">{selectedShoe.name}</h5>
-
-              <div className="px-6">
-                <h5 className="mb-2 text-base font-semibold tracking-tight text-black">
-                  <span className='text-gray-600'>Marca:</span> {selectedShoe.brand}
-                </h5>
-                <h5 className="mb-2 text-base font-semibold tracking-tight text-black">
-                  <span className='text-gray-600'>Categoría:</span> {selectedShoe.category}
-                </h5>
-                <h5 className="text-base font-semibold tracking-tight text-black">
-                  <span className='text-gray-600'>Tienda:</span> {selectedShoe.store}
-                </h5>
-
-                <h5 className="my-4 text-xl font-semibold tracking-tight text-black">Características</h5>
-                <h5 className="mb-2 text-base font-semibold tracking-tight text-black">
-                  <span className='text-gray-600'>Ligereza:</span> {selectedShoe.lightness}
-                </h5>
-                <h5 className="mb-2 text-base font-semibold tracking-tight text-black">
-                  <span className='text-gray-600'>Agarre:</span> {selectedShoe.grip}
-                </h5>
-                <h5 className="mb-2 text-base font-semibold tracking-tight text-black">
-                  <span className='text-gray-600'>Amortiguación:</span> {selectedShoe.cushioning}
-                </h5>
-                <h5 className="text-base font-semibold tracking-tight text-black">
-                  <span className='text-gray-600'>Flexibilidad:</span> {selectedShoe.flexibility}
-                </h5>
-                <h5 className="text-4xl text-center font-bold text-green-700 pb-8">${selectedShoe.price}</h5>
-              </div>
-            </div>
+            ))}
           </div>
         )}
 
