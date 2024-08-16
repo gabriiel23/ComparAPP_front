@@ -2,17 +2,35 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-const LoginForm= () => {
-    
+const LoginForm = () => {
+
     const { register, handleSubmit } = useForm();
 
-    const onSubmitLogin = (data) => {
-        console.log(data)
+    const onSubmitLogin = async (data) => {
+        try {
+            console.log(JSON.stringify(data))
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/credential/getById`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log('Inicio de sesión exitoso:', result);
+        } catch (error) {
+            console.error('Error en el inicio de sesión:', error);
+        }
     };
 
     return (
         <div className="bg-white">
-            <div className="flex justify-center h-screen">
+            <div className="flex justify-center sm:h-screen sm:py-0 py-24">
                 <div className="hidden bg-cover lg:block lg:w-2/3" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)' }}>
                     <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
                         <div>
@@ -21,7 +39,6 @@ const LoginForm= () => {
                                 Dale un programa a alguien y lo frustrarás por un día; <br />
                                 enséñale a programar y lo frustrarás toda la vida.
                             </p>
-
                             <h2 className="text-2xl mt-8 font-bold text-white sm:text-4xl">;</h2>
                             <p className="text-lg max-w-xl mt-3 text-gray-300">
                                 Sería genial que el error típico de programación <br />
@@ -69,7 +86,7 @@ const LoginForm= () => {
                                 <div className="mt-6">
                                     <button
                                         type="submit"
-                                        className="w-full px-4 py-2 tracking-wide text-black transition-colors duration-300 transform bg-[#fcf149] rounded-lg hover:bg-[#cbc246] focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                                        className="w-full px-4 py-2 tracking-wide text-black transition-colors duration-300 transform bg-[#fcf149] rounded-lg hover:bg-[#cbc246] focus:outline-none focus:bg-[#c5bc41] focus:ring focus:ring-blue-300 focus:ring-opacity-50"
                                     >
                                         Iniciar Sesión
                                     </button>

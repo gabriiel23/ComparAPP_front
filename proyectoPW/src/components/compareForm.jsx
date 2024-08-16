@@ -8,8 +8,7 @@ function CompareForm(props) {
         <div className="relative z-10">
           <h1
             id="tituloo"
-            className="text-4xl sm:text-6xl text-center font-extrabold tracking-tight leading-none text-black relative"
-          >
+            className="text-4xl sm:text-6xl text-center font-extrabold tracking-tight leading-none text-black relative">
             Comparador de zapatos
           </h1>
           <span className="absolute inset-0 bg-[#fcf149] opacity-30 blur-md rounded-lg -z-10"></span>
