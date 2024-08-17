@@ -1,33 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useFetchData } from '../hooks/useFectchData';
 
 const LoginForm = () => {
-
-    const { register, handleSubmit } = useForm();
-
-    const onSubmitLogin = async (data) => {
-        try {
-            console.log(JSON.stringify(data))
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/credential/getById`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const result = await response.json();
-            console.log('Inicio de sesión exitoso:', result);
-        } catch (error) {
-            console.error('Error en el inicio de sesión:', error);
-        }
-    };
-
     return (
         <div className="bg-white">
             <div className="flex justify-center sm:h-screen sm:py-0 py-24">
@@ -58,11 +34,10 @@ const LoginForm = () => {
                         </div>
 
                         <div className="mt-8">
-                            <form onSubmit={handleSubmit(onSubmitLogin)}>
+                            <form>
                                 <div>
                                     <label htmlFor="email" className="block mb-2 text-base text-black">Nombre de usuario</label>
                                     <input
-                                        {...register('username')}
                                         type="text"
                                         name="username"
                                         placeholder="usuario"
@@ -75,7 +50,6 @@ const LoginForm = () => {
                                         <label htmlFor="password" className="text-base text-black">Contraseña</label>
                                     </div>
                                     <input
-                                        {...register('password')}
                                         type="password"
                                         name="password"
                                         placeholder="contraseña"
