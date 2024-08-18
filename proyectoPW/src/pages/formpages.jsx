@@ -11,6 +11,7 @@ import ShoesForm from "../components/shoesForm";
 import AboutForm from "../components/aboutForm";
 import CreateShoe from "../components/createShoe"
 import CreateStore from "../components/createStore"
+import HistoryUser from "../components/historyUser"
 
 import Login from "../components/loginForm"
 import Register from "../components/registerForm";
@@ -33,6 +34,7 @@ const Formpages = () => {
           <Route path="/about" element={<AboutForm />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/historial" element={<HistoryUser />} />
         </Routes>
         
       <FooterForm />
