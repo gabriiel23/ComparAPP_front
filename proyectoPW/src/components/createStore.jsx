@@ -1,47 +1,46 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useFetchDataPromise } from '../hooks/useFectchDataPromise'; // Ajusta la ruta según tu estructura
 
 const CreateStore = () => {
-  const [storeName, setStoreName] = useState('');
-  // const [email, setEmail] = useState('');
+  const [storeId, setStoreId] = useState(null);
+  const { register, handleSubmit, reset } = useForm(); // Agregar el método reset
+  const { getFetchData } = useFetchDataPromise();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Evita el comportamiento por defecto del formulario
-
-    // Crear el objeto con los datos de la tienda
-    const storeData = {
-      store: storeName
-      // email: email Descomentar esto cuando se agregue el campo de correo
-    };
-
+  const onSubmitStoreInfo = async (data) => {
     try {
-      const response = await fetch('store/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const storeResult = await getFetchData({
+        method: "POST",
+        endPoint: "store/create",
+        additionalData: {
+          name: data.store,
+          // email: data.email, // Descomentar cuando se use
         },
-        body: JSON.stringify(storeData),
       });
 
-      if (response.ok) {
-        // Manejar la respuesta exitosa
-        const result = await response.json();
-        console.log('Tienda creada:', result);
-        // Reiniciar el formulario o redirigir al usuario, según sea necesario
-        setStoreName('');
-        // setEmail('');
+      console.log("Datos enviados de la tienda:", storeResult);
+
+      if (storeResult && storeResult.code === "COD_OK" && storeResult) {
+        setStoreId(storeResult);
+        alert("Tienda creada con éxito");
       } else {
-        // Manejar errores de la respuesta
-        console.error('Error al crear la tienda:', response.statusText);
+        alert("ERROR al crear la tienda");
       }
+      
+      // Resetea el formulario después de un envío exitoso
+      reset();
     } catch (error) {
-      // Manejar errores de red
-      console.error('Error de red:', error);
+      console.error("Error al guardar la información de la tienda:", error);
+      alert("Hubo un problema al guardar la información. Inténtalo de nuevo.");
+      
+      // Resetea el formulario incluso si ocurre un error
+      reset();
     }
   };
 
   return (
     <div>
-      <div className='bg-gray-200 sm:mx-96 px-6'>
+      <div className='bg-gray-200 mx-96'>
         <div className="flex justify-center pt-16">
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9aoZ9TNrc_pinClu1h-pKIgULddYoky9hvw&s"
@@ -52,7 +51,7 @@ const CreateStore = () => {
 
         <h1 className="text-center text-4xl font-bold mt-6 mb-10">Crear una nueva tienda</h1>
 
-        <form className="max-w-md mx-auto pb-14" onSubmit={handleSubmit}>
+        <form className="max-w-md mx-auto pb-14" onSubmit={handleSubmit(onSubmitStoreInfo)}>
           <div className="relative z-0 w-full mb-10 group">
             <input
               type="text"
@@ -61,8 +60,7 @@ const CreateStore = () => {
               className="block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-black peer"
               placeholder=" "
               required
-              value={storeName}
-              onChange={(e) => setStoreName(e.target.value)} // Actualiza el estado
+              {...register("store", { required: true })} // Registra el input
             />
             <label
               htmlFor="store"
@@ -81,8 +79,7 @@ const CreateStore = () => {
               className="block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-black peer"
               placeholder=" "
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)} // Actualiza el estado
+              {...register("email", { required: true })} // Registra el input
             />
             <label
               htmlFor="email"

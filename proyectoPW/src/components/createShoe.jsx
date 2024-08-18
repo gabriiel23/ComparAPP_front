@@ -3,6 +3,8 @@ import { useFetchData } from "../hooks/useFectchData";
 import Loading from "./messages/loading";
 import ErrorMessage from "./messages/errorMessage";
 import Message from "./messages/messages";
+import { useFetchDataPromise } from '../hooks/useFectchDataPromise';
+import { useForm } from 'react-hook-form';
 
 const CreateShoe = () => {
   const { fetchData: brandsData } = useFetchData({ endPoint: "brand/all" });
@@ -10,7 +12,44 @@ const CreateShoe = () => {
 
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  
+  const [shoeId, setShoeId] = useState(null);
+  const { register, handleSubmit, reset } = useForm(); // Agregar el método reset
+  const { getFetchData } = useFetchDataPromise();
 
+  const onSubmitShoeInfo = async (data) => {
+    try {
+      const shoeResult = await getFetchData({
+        method: "POST",
+        endPoint: "shoes/create",
+        additionalData: {
+          name: data.shoe,
+          brand_id: data.brand,
+          fk_categoryshoes: data.category,
+          image_url: data.image,
+        },
+      });
+      
+      console.log("Datos enviados de la tienda:", shoeResult);
+      
+      if (shoeResult && shoeResult.code === "COD_OK" && shoeResult) {
+        setShoeId(shoeResult);
+        alert("Zapato creado con éxito");
+      } else {
+        alert("ERROR al crear el zapato");
+      }
+      
+      // Resetea el formulario después de un envío exitoso
+      reset();
+    } catch (error) {
+      console.error("Error al guardar la información de la tienda:", error);
+      alert("Hubo un problema al guardar la información. Inténtalo de nuevo.");
+      
+      // Resetea el formulario incluso si ocurre un error
+      reset();
+    }
+  };
+  
   if (brandsData.loading || categoriesData.loading) {
     return <Loading />;
   }
@@ -22,9 +61,6 @@ const CreateShoe = () => {
   if (brandsData.data.length === 0 || categoriesData.data.length === 0) {
     return <Message message="No hay datos disponibles." />;
   }
-
-
-
 
   return (
     <div className='bg-gray-200 sm:mx-96 px-6'>
@@ -38,16 +74,17 @@ const CreateShoe = () => {
 
       <h1 className="text-center text-4xl font-bold mt-6 mb-10">Crear un nuevo zapato</h1>
 
-      <form className="max-w-md mx-auto pb-14">
+      <form className="max-w-md mx-auto pb-14" onSubmit={handleSubmit(onSubmitShoeInfo)}>
 
         <div className="relative z-0 w-full mb-12 group">
           <input
             type="text"
-            name="store"
-            id="store_id"
+            name="shoe"
+            id="zapato"
             className="block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-black peer"
             placeholder=" "
             required
+            {...register("name", { required: true })}
           />
           <label
             htmlFor="store"
@@ -58,11 +95,12 @@ const CreateShoe = () => {
 
         <div className="relative z-0 w-full mb-12 group flex-grow">
           <select
-            id="underline_select_marca"
+            id="marca"
+            name="brand"
             className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-black focus:text-black peer"
             value={selectedBrand}
             onChange={(e) => setSelectedBrand(e.target.value)}
-            required
+            {...register("brand", { required: true })}
           >
             <option className="text-[#fced44]" value="">Escoger</option>
             {brandsData.data.map((brand) => (
@@ -80,11 +118,12 @@ const CreateShoe = () => {
 
         <div className="relative z-0 w-full mb-8 group flex-grow">
           <select
-            id="underline_select_marca"
+            name='category'
+            id="categoria"
             className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-black focus:text-black peer"
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            required
+            {...register("category", { required: true })}
           >
             <option className="text-[#fced44]" value="">Escoger</option>
             {categoriesData.data
@@ -104,8 +143,10 @@ const CreateShoe = () => {
 
         <div className="flex items-center justify-center w-full mb-10">
           <label
+            name="image"
             htmlFor="dropzone-file"
             className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+            {...register("image", { required: true })}
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <svg

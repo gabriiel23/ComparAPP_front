@@ -78,7 +78,7 @@ const StoresForm = () => {
             <div className="bg-[#faef57] rounded-xl shadow-sm shadow-black outline outline-white -outline-offset-8">
               <div className="group overflow-hidden relative duration-500 hover:after:translate-x-18 hover:before:translate-y-9 hover:before:-translate-x-24 hover:rotate-12 flex justify-center items-center h-44 w-60 bg-black rounded-xl outline outline-white -outline-offset-8">
                 <div className="z-10 flex flex-col items-center">
-                  <span className="text-[#faef57] text-center px-4 text-4xl font-bold pt-4">
+                  <span className="text-[#faef57] text-center px-4 text-3xl font-semibold pt-4">
                     {store.name}
                   </span>
                   <img
