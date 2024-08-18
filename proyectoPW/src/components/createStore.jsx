@@ -40,7 +40,7 @@ const CreateStore = () => {
 
   return (
     <div>
-      <div className='bg-gray-200 mx-96'>
+      <div className='bg-gray-200 sm:mx-96 mx-4 sm:px-0 px-4'>
         <div className="flex justify-center pt-16">
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9aoZ9TNrc_pinClu1h-pKIgULddYoky9hvw&s"
