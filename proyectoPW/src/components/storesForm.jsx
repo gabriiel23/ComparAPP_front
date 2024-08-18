@@ -48,6 +48,15 @@ const StoresForm = () => {
           </span>
         </button>
       </div>
+
+      <div className="flex justify-center">
+        <Link 
+          to="/createStore"
+          className="bg-[#fced44] hover:bg-[#d8cb3e] border-2 border-black px-6 py-3 rounded-xl mb-4 font-semibold"> 
+            Crear una tienda 
+        </Link>
+      </div>
+
       <hr className="border-black" />
       <div>
         <p className="text-base py-8 sm:px-48 px-6 text-center">

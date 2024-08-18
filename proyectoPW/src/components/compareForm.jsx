@@ -80,7 +80,7 @@ function CompareForm(props) {
         </div>
 
         <div className="bg-white border-2 border-[#fcf149] py-16 mt-16 sm:w-1/2 w-[96%] text-center rounded-3xl">
-          <p className="sm:text-4xl text-2xl sm:font-bold font-bold text-black mb-4">
+          <p className="sm:text-[42px] text-2xl font-bold text-black mb-4">
             -- Añadir zapatos a comparar --
           </p>
           <p className="text-center sm:px-0 px-4 mb-8">
@@ -152,52 +152,82 @@ function CompareForm(props) {
 
                 <div className="flex justify-center">
                   <img
-                    className="m-8 rounded-3xl border-2 border-black"
+                    className="m-8 rounded-3xl border-2 border-black w-52"
                     src={shoe.image_url}
                     alt={shoe.shoe_name}
                   />
                 </div>
 
-                <h5 className="mx-4 mb-4 text-[28px] text-center font-bold tracking-tight text-black">
+                <hr className="border-[#fced44] mb-8" />
+
+                <h5 className="mx-4 mb-8 text-3xl text-center font-bold tracking-tight text-black">
                   {shoe.shoe_name}
                 </h5>
 
                 <div className="px-6">
-                  <h5 className="mb-2 text-base font-semibold tracking-tight text-black">
-                    <span className="text-gray-600">Marca:</span>{" "}
-                    {shoe.brand_name}{" "}
-                    {/* Asegúrate de que el nombre de la propiedad sea correcto */}
-                  </h5>
-                  <h5 className="mb-2 text-base font-semibold tracking-tight text-black">
-                    <span className="text-gray-600">Categoría:</span>{" "}
-                    {shoe.category_name}{" "}
-                    {/* Asegúrate de que el nombre de la propiedad sea correcto */}
-                  </h5>
-                  <h5 className="text-base font-semibold tracking-tight text-black">
-                    <span className="text-gray-600">Tienda:</span>{" "}
-                    {shoe.prices && shoe.prices.length > 0
-                      ? shoe.prices[0].store_name
-                      : "Sin tienda disponible"}{" "}
-                    {/* Verifica que haya al menos un precio y accede al nombre de la tienda */}
+                  <div className="flex flex-row items-center my-4">
+                    <h5 className="text-base font-semibold tracking-tight text-gray-600 items-center ">
+                      Marca:
+                    </h5>
+
+                    <h5 className="text-lg ml-12 font-semibold tracking-tight ">
+                      {shoe.brand_name}{" "}
+                    </h5>
+                  </div>
+
+                  <div className="flex flex-row items-center my-4">
+                    <h5 className="text-base font-semibold tracking-tight text-gray-600 items-center ">
+                      Categoría:
+                    </h5>
+                    <h5 className="text-lg ml-6 font-semibold tracking-tight">
+                      {shoe.category_name}{" "}
+                      {/* Asegúrate de que el nombre de la propiedad sea correcto */}
+                    </h5>
+                  </div>
+
+                  <div className="flex flex-row items-center my-4">
+                    <h5 className="text-base font-semibold tracking-tight text-gray-600 items-center ">
+                      Tienda:
+                    </h5>
+
+                    <h5 className="text-xl text-yellow-400 ml-12 font-semibold">
+                      {shoe.prices && shoe.prices.length > 0
+                        ? shoe.prices[0].store_name
+                        : "Sin tienda disponible"}{" "}
+                    </h5>
+                  </div>
+
+                  <hr className="border-[#fced44] my-6" />
+
+                  <h5 className="my-6 text-xl font-semibold tracking-tight text-gay-700">
+                    Características:
                   </h5>
 
-                  <h5 className="my-4 text-xl font-semibold tracking-tight text-black">
-                    Características
-                  </h5>
                   {shoe.characteristics.map((characteristic) => (
-                    <h5
-                      key={characteristic.characteristic_id}
-                      className="mb-2 text-base font-semibold tracking-tight text-black"
-                    >
-                      <span className="text-gray-600">
+
+                    <div key={characteristic.characteristic_id}
+                      className="flex flex-row items-center my-4 ">
+                      <h5 className="text-base font-semibold tracking-tight text-gray-600 items-center ">
                         {characteristic.characteristic_name}:
-                      </span>{" "}
-                      {characteristic.value}
-                    </h5>
+                      </h5>
+                      <h5 className="text-lg ml-12 font-semibold tracking-tight ">
+                        {characteristic.value} /10
+                      </h5>
+                    </div>
                   ))}
-                  <h5 className="text-4xl text-center font-bold text-green-500 pb-8">
-                    ${shoe.prices[0].price}
-                  </h5>
+
+                  <hr className="border-[#fced44] my-6" />    
+
+                  <div className="flex flex-row items-center my-6 bg-[#fced44] p-4 rounded-lg justify-center">
+                    <h5 className="text-base font-semibold tracking-tight text-gray-600 items-center">
+                      Precio <br />
+                      Oficial
+                    </h5>
+                    <h5 className="text-3xl font-bold text-black-500 ml-6">
+                      {shoe.prices[0].price} $
+                    </h5>
+                  </div>
+
                 </div>
               </div>
             ))}
