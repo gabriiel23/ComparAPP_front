@@ -1,25 +1,34 @@
-import React from "react";
+// src/components/StoresForm.jsx
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFetchData } from "../hooks/useFectchData";
 import Loading from "./messages/loading";
 import ErrorMessage from "./messages/errorMessage";
 import Message from "./messages/messages";
 import { useFetchDataPromise } from "../hooks/useFectchDataPromise";
+import { useAuth } from "../hooks/AuthContext";
 
 const StoresForm = () => {
   const { getFetchData } = useFetchDataPromise();
   const navigate = useNavigate();
+  const [loadingUser, setLoadingUser] = useState(true);
+  const { user } = useAuth(); // Obtén el usuario desde el contexto
+
   const {
     fetchData: { loading, code, message, data },
   } = useFetchData({ endPoint: "store/getAll" });
+
+  useEffect(() => {
+    if (user) {
+      setLoadingUser(false);
+    }
+  }, [user]);
 
   const handleStoreClick = async (store_id) => {
     const response = await getFetchData({
       endPoint: `storeshoes/${store_id}`,
       method: "POST",
-      additionalData: {
-        store_id: store_id, 
-      },
+      additionalData: { store_id: store_id },
     });
 
     const { code, data, message } = response;
@@ -31,7 +40,7 @@ const StoresForm = () => {
     }
   };
 
-  if (loading) return <Loading />;
+  if (loading || loadingUser) return <Loading />;
   if (code !== "COD_OK") return <ErrorMessage message={message} />;
   if (data.length === 0)
     return <Message message="No hay tiendas disponibles en este momento." />;
@@ -49,13 +58,17 @@ const StoresForm = () => {
         </button>
       </div>
 
-      <div className="flex justify-center">
-        <Link 
-          to="/createStore"
-          className="bg-[#fced44] hover:bg-[#d8cb3e] border-2 border-black px-6 py-3 rounded-xl mb-4 font-semibold"> 
-            Crear una tienda 
-        </Link>
-      </div>
+      {/* Mostrar enlace solo si el rol del usuario es admin */}
+      {user?.role === "admin" && (
+        <div className="flex justify-center">
+          <Link
+            to="/createStore"
+            className="bg-[#fced44] hover:bg-[#d8cb3e] border-2 border-black px-6 py-3 rounded-xl mb-4 font-semibold"
+          >
+            Crear una tienda
+          </Link>
+        </div>
+      )}
 
       <hr className="border-black" />
       <div>

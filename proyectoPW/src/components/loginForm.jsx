@@ -2,12 +2,12 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useFetchDataPromise } from "../hooks/useFectchDataPromise"; // Asegúrate de que tu hook está correctamente importado
-
+import { useAuth } from "../hooks/AuthContext";
 const LoginForm = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const { getFetchData } = useFetchDataPromise();
-
+  const { login } = useAuth();
   const onSubmit = async (data) => {
     try {
       const response = await getFetchData({
@@ -16,10 +16,6 @@ const LoginForm = () => {
         additionalData: data,
       });
 
-      // Mostrar la respuesta completa para depuración
-      console.log("Parsed JSON Response:", response);
-
-      // Verifica que la respuesta contenga el código de éxito y datos válidos
       if (
         response &&
         response.code === "COD_OK" &&
@@ -27,20 +23,14 @@ const LoginForm = () => {
         response.data.length > 0
       ) {
         const userData = response.data[0]; // Accede al primer (y probablemente único) elemento en el array 'data'
-
-        // Imprime userData para verificar que contiene los datos correctos
-        console.log("test userData:", userData);
-
-        // Guarda el token y userId en localStorage
+        login(userData);
+        // Guarda el token, userId y rol en localStorage
         localStorage.setItem("userId", userData.userId);
         localStorage.setItem("token", userData.token);
-
-        // Verifica que los datos se han guardado correctamente en localStorage
-        console.log("UserId en localStorage:", localStorage.getItem("userId"));
-        console.log("Token en localStorage:", localStorage.getItem("token"));
-
-        // Redirige al usuario a la página principal
-        navigate("/"); // Cambia '/' por la ruta a la que desees redirigir
+        console.log("userId stored:", localStorage.getItem("userId"));
+        console.log("token stored:", localStorage.getItem("token"));
+        // Obtener rol del usuario
+        await fetchUserRole(userData.userId);
       } else {
         // Si la respuesta no contiene datos válidos, muestra el mensaje recibido
         console.error(
@@ -51,6 +41,40 @@ const LoginForm = () => {
     } catch (error) {
       // Maneja cualquier error que pueda ocurrir durante la solicitud
       console.error("Error en la solicitud:", error);
+    }
+  };
+
+  const fetchUserRole = async (userId) => {
+    try {
+      const response = await getFetchData({
+        endPoint: `usercategorie/${userId}`,
+        method: "POST",
+      });
+
+      if (
+        response &&
+        response.code === "COD_OK" &&
+        Array.isArray(response.data) &&
+        response.data.length > 0
+      ) {
+        const userRoleData = response.data[0];
+        // Establece el rol del usuario en localStorage
+        localStorage.setItem("role", userRoleData.category_name); // Asumiendo que el rol está en `role`
+        console.log("roles stored:", localStorage.getItem("role"));
+        // Redirige según el rol
+        if (userRoleData.category_name === "admin") {
+          navigate("/"); // Ruta para el dashboard de admin
+        } else {
+          navigate("/shoeStore"); // Ruta para el dashboard de usuario
+        }
+      } else {
+        console.error(
+          "Error al obtener el rol del usuario:",
+          response.message || "Error desconocido"
+        );
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de rol:", error);
     }
   };
 
