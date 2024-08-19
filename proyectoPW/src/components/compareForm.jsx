@@ -28,22 +28,15 @@ function CompareForm(props) {
   const handleShoeSelect = async (shoe_id) => {
     if (selectedShoes.length < 3) {
       try {
-        // Verificar el id del zapato
-        console.log("Selected shoe ID:", shoe_id);
-
-        // Consulta el endpoint para obtener más detalles sobre el zapato seleccionado
         const response = await getFetchData({
-          endPoint: `characPriceShoes/${shoe_id}`, // Usa shoe.id aquí
+          endPoint: `characPriceShoes/${shoe_id}`,
           method: "POST",
           additionalData: {
-            shoe_id: shoe_id, // Asegúrate de que el ID sea el correcto
+            shoe_id: shoe_id,
           },
         });
 
-        console.log("Response from characPriceShoes endpoint:", response);
-
         if (response.code === "COD_OK") {
-          console.log("Data received:", response.data);
           setSelectedShoes([...selectedShoes, response.data]);
         } else {
           console.error("Error fetching shoe details:", response.message);
@@ -63,7 +56,7 @@ function CompareForm(props) {
   if (loading) return <Loading />;
   if (code !== "COD_OK") return <ErrorMessage message={message} />;
   if (data.length === 0)
-    return <Message message="No hay como comparar en este momento." />;
+    return <Message message="No hay zapatos para comparar en este momento." />;
 
   return (
     <div className="bg-cover bg-[url('/BackF.png')]">
@@ -88,7 +81,6 @@ function CompareForm(props) {
             ver las características de cada uno.
           </p>
 
-          {/* Barra de búsqueda */}
           <div className="relative sm:w-full w-[80%] max-w-md mx-auto">
             <input
               type="text"
@@ -112,13 +104,12 @@ function CompareForm(props) {
               />
             </svg>
 
-            {/* Sugerencias */}
             {suggestions.length > 0 && (
               <ul className="absolute top-full left-0 w-full bg-white border border-[#fcf149] rounded-md mt-2 z-10">
                 {suggestions.map((shoe) => (
                   <li
-                    key={shoe.shoe_id} // Cambia `shoe.id` por `shoe.shoe_id`
-                    onClick={() => handleShoeSelect(shoe.shoe_id)} // Pasa solo el `shoe_id`
+                    key={shoe.shoe_id}
+                    onClick={() => handleShoeSelect(shoe.shoe_id)}
                     className="flex items-center p-2 cursor-pointer hover:bg-gray-200 hover:rounded-full"
                   >
                     <img
@@ -134,7 +125,6 @@ function CompareForm(props) {
           </div>
         </div>
 
-        {/* Tarjetas de zapatos seleccionados */}
         {selectedShoes.length > 0 && (
           <div className="flex flex-wrap justify-center gap-8 pb-16 sm:px-48 px-0 pt-12">
             {selectedShoes.map((shoe) => (
@@ -142,7 +132,6 @@ function CompareForm(props) {
                 className="relative w-80 bg-white border border-[#fcf149] rounded-3xl shadow"
                 key={shoe.shoe_id}
               >
-                {/* Botón de cierre */}
                 <button
                   onClick={() => handleRemoveShoe(shoe.shoe_id)}
                   className="absolute top-2 right-2 bg-red-600 text-white p-[6px] rounded-full hover:bg-red-700 transition-all"
@@ -180,33 +169,38 @@ function CompareForm(props) {
                       Categoría:
                     </h5>
                     <h5 className="text-lg ml-6 font-semibold tracking-tight">
-                      {shoe.category_name}{" "}
-                      {/* Asegúrate de que el nombre de la propiedad sea correcto */}
+                      {shoe.category_name}
                     </h5>
                   </div>
 
                   <div className="flex flex-row items-center my-4">
                     <h5 className="text-base font-semibold tracking-tight text-gray-600 items-center ">
-                      Tienda:
-                    </h5>
-
-                    <h5 className="text-xl text-yellow-400 ml-12 font-semibold">
-                      {shoe.prices && shoe.prices.length > 0
-                        ? shoe.prices[0].store_name
-                        : "Sin tienda disponible"}{" "}
+                      Tiendas:
                     </h5>
                   </div>
 
+                  {shoe.prices.map((priceDetail, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-row items-center my-2"
+                    >
+                      <h5 className="text-lg ml-4 font-semibold tracking-tight text-yellow-500">
+                        {priceDetail.store_name}: {priceDetail.price} $
+                      </h5>
+                    </div>
+                  ))}
+
                   <hr className="border-[#fced44] my-6" />
 
-                  <h5 className="my-6 text-xl font-semibold tracking-tight text-gay-700">
+                  <h5 className="my-6 text-xl font-semibold tracking-tight text-gray-700">
                     Características:
                   </h5>
 
                   {shoe.characteristics.map((characteristic) => (
-
-                    <div key={characteristic.characteristic_id}
-                      className="flex flex-row items-center my-4 ">
+                    <div
+                      key={characteristic.characteristic_id}
+                      className="flex flex-row items-center my-4 "
+                    >
                       <h5 className="text-base font-semibold tracking-tight text-gray-600 items-center ">
                         {characteristic.characteristic_name}:
                       </h5>
@@ -215,19 +209,6 @@ function CompareForm(props) {
                       </h5>
                     </div>
                   ))}
-
-                  <hr className="border-[#fced44] my-6" />    
-
-                  <div className="flex flex-row items-center my-6 bg-[#fced44] p-4 rounded-lg justify-center">
-                    <h5 className="text-base font-semibold tracking-tight text-gray-600 items-center">
-                      Precio <br />
-                      Oficial
-                    </h5>
-                    <h5 className="text-3xl font-bold text-black-500 ml-6">
-                      {shoe.prices[0].price} $
-                    </h5>
-                  </div>
-
                 </div>
               </div>
             ))}
