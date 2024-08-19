@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useFetchDataPromise } from "./useFectchDataPromise"
 
-
 export const useFetchData = ({ endPoint, method = "POST", additionalData }) => {
 
     const [fetchData, setFeachData] = useState({ data: {}, message: "", code: "", loading: true })
@@ -23,6 +22,4 @@ export const useFetchData = ({ endPoint, method = "POST", additionalData }) => {
         fetchData
 
     }
-
-
 }

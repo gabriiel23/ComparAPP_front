@@ -4,6 +4,7 @@ import Loading from "./messages/loading";
 import ErrorMessage from "./messages/errorMessage";
 import Message from "./messages/messages";
 
+
 const CreateShoe = () => {
   const { fetchData: brandsData } = useFetchData({ endPoint: "brand/all" });
   const { fetchData: categoriesData } = useFetchData({ endPoint: "category/all" });
@@ -16,6 +17,43 @@ const CreateShoe = () => {
     const file = e.target.files[0]; // Obtiene el primer archivo
     if (file) {
       setImage(URL.createObjectURL(file)); // Crea una URL para la vista previa
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission
+
+    const formData = new FormData(); // Create a FormData object
+    formData.append('name', document.getElementById('shoe_id').value); // Add shoe name
+    formData.append('brand_id', selectedBrand); // Add brand ID
+    formData.append('fk_categoryshoes', selectedCategory); // Add category ID
+    if (image) { // Add image if uploaded
+      formData.append('image_url', image);
+    }
+
+    console.log("Datos del formdata", formData)
+    console.log('selectedBrand:', selectedBrand);
+    console.log('selectedCategory:', selectedCategory);
+    console.log('image:', image);
+
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/shoes/create`, {
+        method: 'POST',
+        body: formData, // Use formData instead of plain object
+      });
+
+      const data = await response.json();
+
+      if (data.code === 'COD_OK') {
+        // Handle successful shoe creation (e.g., show a success message)
+        console.log('Shoe created successfully!');
+      } else {
+        // Handle creation error (e.g., show an error message)
+        console.error('Error creating shoe:', data.message);
+      }
+    } catch (error) {
+      console.error('Error sending data:', error);
     }
   };
 
@@ -45,7 +83,7 @@ const CreateShoe = () => {
 
           <h1 className="text-center text-4xl font-bold mt-6 mb-10">Crear un nuevo zapato</h1>
 
-          <form className="max-w-md mx-auto pb-14">
+          <form className="max-w-md mx-auto pb-14" onSubmit={handleSubmit}>
 
             <div>
               <label></label>
@@ -53,7 +91,7 @@ const CreateShoe = () => {
                 <input
                   type="text"
                   name="store"
-                  id="store_id"
+                  id="shoe_id"
                   className="block py-2.5 px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-black peer"
                   placeholder=" "
                   required
@@ -68,7 +106,7 @@ const CreateShoe = () => {
 
             <div className="relative z-0 w-full mb-12 group flex-grow">
               <select
-                id="underline_select_marca"
+                id="brand_id"
                 className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-black focus:text-black peer"
                 value={selectedBrand}
                 onChange={(e) => setSelectedBrand(e.target.value)}
@@ -90,7 +128,7 @@ const CreateShoe = () => {
 
             <div className="relative z-0 w-full mb-8 group flex-grow">
               <select
-                id="underline_select_categoria"
+                id="category_id"
                 className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-black focus:text-black peer"
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
@@ -143,7 +181,7 @@ const CreateShoe = () => {
                   accept=".svg, .png, .jpg, .jpeg"
                   onChange={handleImageUpload} // Manejador de cambio para la imagen
                 />
-                
+
                 {/* Vista previa de la imagen si está subida */}
                 {image && (
                   <img src={image} alt="Vista previa" className="w-24 rounded-md" />
