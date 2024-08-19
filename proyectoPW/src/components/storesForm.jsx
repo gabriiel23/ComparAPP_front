@@ -1,4 +1,3 @@
-// src/components/StoresForm.jsx
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFetchData } from "../hooks/useFectchData";
@@ -19,7 +18,7 @@ const StoresForm = () => {
   } = useFetchData({ endPoint: "store/getAll" });
 
   useEffect(() => {
-    if (user) {
+    if (user !== undefined) {
       setLoadingUser(false);
     }
   }, [user]);
