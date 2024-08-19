@@ -1,59 +1,58 @@
-import React, { useState } from 'react';
-import { useFetchData } from '../hooks/useFectchData';
+import React, { useState } from "react";
+import { useFetchDataPromise } from "../hooks/useFectchDataPromise";
+import { useFetchData } from "../hooks/useFectchData";
 import Loading from "./messages/loading";
 import ErrorMessage from "./messages/errorMessage";
 import Message from "./messages/messages";
 
-
 const CreateShoe = () => {
+  const { getFetchData } = useFetchDataPromise();
   const { fetchData: brandsData } = useFetchData({ endPoint: "brand/all" });
-  const { fetchData: categoriesData } = useFetchData({ endPoint: "category/all" });
+  const { fetchData: categoriesData } = useFetchData({
+    endPoint: "category/all",
+  });
 
-  const [selectedBrand, setSelectedBrand] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState(""); // Guarda el ID de la marca
+  const [selectedCategory, setSelectedCategory] = useState(""); // Guarda el ID de la categoría
   const [image, setImage] = useState(null); // Nuevo estado para la imagen
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0]; // Obtiene el primer archivo
     if (file) {
-      setImage(URL.createObjectURL(file)); // Crea una URL para la vista previa
+      setImage(file); // Guarda el archivo en lugar de la URL
     }
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault(); // Previene el envío por defecto del formulario
 
-    const formData = new FormData(); // Create a FormData object
-    formData.append('name', document.getElementById('shoe_id').value); // Add shoe name
-    formData.append('brand_id', selectedBrand); // Add brand ID
-    formData.append('fk_categoryshoes', selectedCategory); // Add category ID
-    if (image) { // Add image if uploaded
-      formData.append('image_url', image);
+    // Crear un objeto FormData
+    const formData = new FormData();
+    formData.append("name", document.getElementById("shoe_id").value); // Añadir nombre del zapato
+    formData.append("brand_id", selectedBrand); // Añadir ID de marca
+    formData.append("fk_categoryshoes", selectedCategory); // Añadir ID de categoría
+    if (image) {
+      formData.append("image_url", image); // Añadir imagen si se ha subido
     }
 
-    console.log("Datos del formdata", formData)
-    console.log('selectedBrand:', selectedBrand);
-    console.log('selectedCategory:', selectedCategory);
-    console.log('image:', image);
-
+    console.log("Datos del FormData", formData);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/shoes/create`, {
-        method: 'POST',
-        body: formData, // Use formData instead of plain object
+      const userResult = await getFetchData({
+        method: "POST",
+        endPoint: "shoes/create",
+        additionalData: formData, // Usa FormData en lugar de un objeto plano
       });
 
-      const data = await response.json();
-
-      if (data.code === 'COD_OK') {
-        // Handle successful shoe creation (e.g., show a success message)
-        console.log('Shoe created successfully!');
+      if (userResult.code === "COD_OK") {
+        // Manejar la creación exitosa del zapato
+        console.log("Shoe created successfully!");
       } else {
-        // Handle creation error (e.g., show an error message)
-        console.error('Error creating shoe:', data.message);
+        // Manejar el error de creación
+        console.error("Error creating shoe:", userResult.message);
       }
     } catch (error) {
-      console.error('Error sending data:', error);
+      console.error("Error sending data:", error);
     }
   };
 
@@ -72,7 +71,7 @@ const CreateShoe = () => {
   return (
     <div>
       <div>
-        <div className='bg-gray-200 sm:mx-96 px-6'>
+        <div className="bg-gray-200 sm:mx-96 px-6">
           <div className="flex justify-center pt-16">
             <img
               src="https://i.pinimg.com/1200x/64/3f/4b/643f4b7c45b50b19bf88598a91929d14.jpg"
@@ -81,10 +80,11 @@ const CreateShoe = () => {
             />
           </div>
 
-          <h1 className="text-center text-4xl font-bold mt-6 mb-10">Crear un nuevo zapato</h1>
+          <h1 className="text-center text-4xl font-bold mt-6 mb-10">
+            Crear un nuevo zapato
+          </h1>
 
           <form className="max-w-md mx-auto pb-14" onSubmit={handleSubmit}>
-
             <div>
               <label></label>
               <div className="relative z-0 w-full mb-12 group">
@@ -98,7 +98,8 @@ const CreateShoe = () => {
                 />
                 <label
                   htmlFor="store"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
                   Nombre del zapato
                 </label>
               </div>
@@ -112,16 +113,21 @@ const CreateShoe = () => {
                 onChange={(e) => setSelectedBrand(e.target.value)}
                 required
               >
-                <option className="text-[#fced44]" value="">Escoger</option>
+                <option className="text-[#fced44]" value="">
+                  Escoger
+                </option>
                 {brandsData.data.map((brand) => (
-                  <option key={brand.name} value={brand.name}>
-                    {brand.name}
+                  <option key={brand.id} value={brand.id}>
+                    {" "}
+                    {/* El valor es el ID */}
+                    {brand.name} {/* El texto visible es el nombre */}
                   </option>
                 ))}
               </select>
               <label
                 htmlFor="underline_select_marca"
-                className="absolute text-sm text-gray-500 -translate-y-7 scale-75 top-3 -z-10 origin-[0]">
+                className="absolute text-sm text-gray-500 -translate-y-7 scale-75 top-3 -z-10 origin-[0]"
+              >
                 Marca a la que pertenece
               </label>
             </div>
@@ -134,18 +140,23 @@ const CreateShoe = () => {
                 onChange={(e) => setSelectedCategory(e.target.value)}
                 required
               >
-                <option className="text-[#fced44]" value="">Escoger</option>
+                <option className="text-[#fced44]" value="">
+                  Escoger
+                </option>
                 {categoriesData.data
                   .filter((category) => category.fk_categories === 30)
                   .map((category) => (
-                    <option key={category.name} value={category.name}>
-                      {category.name}
+                    <option key={category.id} value={category.id}>
+                      {" "}
+                      {/* El valor es el ID */}
+                      {category.name} {/* El texto visible es el nombre */}
                     </option>
                   ))}
               </select>
               <label
                 htmlFor="underline_select_categoria"
-                className="absolute text-sm text-gray-500 -translate-y-7 scale-75 top-3 -z-10 origin-[0]">
+                className="absolute text-sm text-gray-500 -translate-y-7 scale-75 top-3 -z-10 origin-[0]"
+              >
                 Categoria a la que pertenece
               </label>
             </div>
@@ -171,7 +182,9 @@ const CreateShoe = () => {
                       d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                     />
                   </svg>
-                  <p className="mb-2 text-sm text-gray-500">Subir una imagen del zapato</p>
+                  <p className="mb-2 text-sm text-gray-500">
+                    Subir una imagen del zapato
+                  </p>
                   <p className="text-xs text-gray-500">SVG, PNG o JPG</p>
                 </div>
                 <input
@@ -184,7 +197,11 @@ const CreateShoe = () => {
 
                 {/* Vista previa de la imagen si está subida */}
                 {image && (
-                  <img src={image} alt="Vista previa" className="w-24 rounded-md" />
+                  <img
+                    src={URL.createObjectURL(image)} // Usa URL.createObjectURL para vista previa
+                    alt="Vista previa"
+                    className="w-24 rounded-md"
+                  />
                 )}
               </label>
             </div>
@@ -192,8 +209,9 @@ const CreateShoe = () => {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="text-black bg-[#fced44] hover:bg-[#dccf3e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
-                Enviar
+                className="px-6 py-2.5 bg-black text-white rounded-full text-lg"
+              >
+                Crear zapato
               </button>
             </div>
           </form>
