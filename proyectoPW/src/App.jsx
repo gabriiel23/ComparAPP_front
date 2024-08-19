@@ -1,18 +1,16 @@
-import { useState } from 'react'
-import './App.css'
+import "./App.css";
+import React from "react";
 import { BrowserRouter } from "react-router-dom";
-
 import Formpages from "./pages/formpages";
+import { AuthProvider } from "./hooks/AuthContext";
 
 function App() {
   return (
-    <>
     <BrowserRouter>
-
-      <Formpages/>
-      
+      <AuthProvider>
+        <Formpages />
+      </AuthProvider>
     </BrowserRouter>
-    </>
   );
 }
 

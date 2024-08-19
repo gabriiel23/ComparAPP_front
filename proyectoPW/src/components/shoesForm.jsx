@@ -4,17 +4,25 @@ import Loading from "./messages/loading";
 import ErrorMessage from "./messages/errorMessage";
 import Message from "./messages/messages";
 import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/AuthContext"; // Importa el hook del contexto
 
 const ShoesForm = () => {
   // Fetching initial shoes data
   const {
-    fetchData: { loading, code, message, data },
+    fetchData: {
+      loading: loadingShoes,
+      code: codeShoes,
+      message: messageShoes,
+      data: shoesData,
+    },
   } = useFetchData({ endPoint: "shoesprice" });
 
   // Fetching stores, brands, and categories
   const { fetchData: storesData } = useFetchData({ endPoint: "store/getAll" });
   const { fetchData: brandsData } = useFetchData({ endPoint: "brand/all" });
-  const { fetchData: categoriesData } = useFetchData({ endPoint: "category/all" });
+  const { fetchData: categoriesData } = useFetchData({
+    endPoint: "category/all",
+  });
 
   // State for filters
   const [selectedStore, setSelectedStore] = useState("");
@@ -22,32 +30,44 @@ const ShoesForm = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [filteredShoes, setFilteredShoes] = useState([]);
 
+  // Get user role from context
+  const { user } = useAuth();
+
   // Filter shoes based on selected options
   useEffect(() => {
-    let filtered = data;
+    if (shoesData) {
+      let filtered = shoesData;
 
-    if (selectedStore) {
-      filtered = filtered.filter((shoe) => shoe.store_name === selectedStore);
-    }
-    if (selectedBrand) {
-      filtered = filtered.filter((shoe) => shoe.brand_name === selectedBrand);
-    }
-    if (selectedCategory) {
-      filtered = filtered.filter((shoe) => shoe.category_name === selectedCategory);
-    }
+      if (selectedStore) {
+        filtered = filtered.filter((shoe) => shoe.store_name === selectedStore);
+      }
+      if (selectedBrand) {
+        filtered = filtered.filter((shoe) => shoe.brand_name === selectedBrand);
+      }
+      if (selectedCategory) {
+        filtered = filtered.filter(
+          (shoe) => shoe.category_name === selectedCategory
+        );
+      }
 
-    setFilteredShoes(filtered);
-  }, [selectedStore, selectedBrand, selectedCategory, data]);
+      setFilteredShoes(filtered);
+    }
+  }, [selectedStore, selectedBrand, selectedCategory, shoesData]);
 
-  if (loading || storesData.loading || brandsData.loading || categoriesData.loading) {
+  if (
+    loadingShoes ||
+    storesData.loading ||
+    brandsData.loading ||
+    categoriesData.loading
+  ) {
     return <Loading />;
   }
 
-  if (code !== "COD_OK") {
-    return <ErrorMessage message={message} />;
+  if (codeShoes !== "COD_OK") {
+    return <ErrorMessage message={messageShoes} />;
   }
 
-  if (data.length === 0) {
+  if (shoesData.length === 0) {
     return <Message message="No hay zapatos disponibles en este momento." />;
   }
 
@@ -67,20 +87,26 @@ const ShoesForm = () => {
         </div>
       </div>
 
-      <div className="flex justify-center mt-6">
-        <Link
-          to="/createShoe"
-          className="bg-black text-[#fced44] border-2 border-[#fced44] hover:bg-gray-900 px-6 py-3 rounded-xl mb-4 font-semibold">
-          Crear un zapato
-        </Link>
-      </div>
+      {/* Mostrar enlace solo si el rol del usuario es admin */}
+      {user?.role === "admin" && (
+        <div className="flex justify-center mt-6">
+          <Link
+            to="/createShoe"
+            className="bg-black text-[#fced44] border-2 border-[#fced44] hover:bg-gray-900 px-6 py-3 rounded-xl mb-4 font-semibold"
+          >
+            Crear un zapato
+          </Link>
+        </div>
+      )}
 
       <div className="sm:px-60 px-10 pt-20 pb-8">
         <h1 className="text-white text-xl">Filtrar resultados</h1>
 
         <div className="flex sm:flex-row flex-col sm:gap-20 gap-0">
           <form className="my-6 flex-grow">
-            <label htmlFor="underline_select_tienda" className="sr-only">Tienda</label>
+            <label htmlFor="underline_select_tienda" className="sr-only">
+              Tienda
+            </label>
             <select
               id="underline_select_tienda"
               className="block p-3 rounded-xl w-full text-sm text-gray-300 bg-transparent border-0 border-b-2 border-[#fcf149] dark:bg-black appearance-none focus:outline-none focus:ring-0 focus:border-[#7a7632] peer"
@@ -97,7 +123,9 @@ const ShoesForm = () => {
           </form>
 
           <form className="my-6 flex-grow">
-            <label htmlFor="underline_select_marca" className="sr-only">Marca</label>
+            <label htmlFor="underline_select_marca" className="sr-only">
+              Marca
+            </label>
             <select
               id="underline_select_marca"
               className="block p-3 rounded-xl w-full text-sm text-gray-300 bg-transparent border-0 border-b-2 border-[#fcf149] dark:bg-black appearance-none focus:outline-none focus:ring-0 focus:border-[#7a7632] peer"
@@ -114,7 +142,9 @@ const ShoesForm = () => {
           </form>
 
           <form className="my-6 flex-grow">
-            <label htmlFor="underline_select_categoria" className="sr-only">Categoria</label>
+            <label htmlFor="underline_select_categoria" className="sr-only">
+              Categoria
+            </label>
             <select
               id="underline_select_categoria"
               className="block p-3 rounded-xl w-full text-sm text-gray-300 bg-transparent border-0 border-b-2 border-[#fcf149] dark:bg-black appearance-none focus:outline-none focus:ring-0 focus:border-[#7a7632] peer"
@@ -136,8 +166,15 @@ const ShoesForm = () => {
 
       <div className="flex flex-wrap justify-center gap-8 pb-16 sm:px-48 px-0">
         {filteredShoes.map((item) => (
-          <div className="w-60 bg-black border border-[#fcf149] rounded-lg shadow" key={item.shoe_id}>
-            <img className="p-8 rounded-t-lg" src={item.image_url} alt={item.name} />
+          <div
+            className="w-60 bg-black border border-[#fcf149] rounded-lg shadow"
+            key={item.shoe_id}
+          >
+            <img
+              className="p-8 rounded-t-lg"
+              src={item.image_url}
+              alt={item.shoe_name}
+            />
             <h5 className="mx-4 mb-4 text-xl text-center font-semibold tracking-tight text-[#fcf149]">
               {item.shoe_name}
             </h5>
@@ -146,7 +183,8 @@ const ShoesForm = () => {
                 <span className="text-gray-400">Marca:</span> {item.brand_name}
               </h5>
               <h5 className="mb-2 text-base font-semibold tracking-tight text-white">
-                <span className="text-gray-400">Categoría:</span> {item.category_name}
+                <span className="text-gray-400">Categoría:</span>{" "}
+                {item.category_name}
               </h5>
               <h5 className="text-base font-semibold tracking-tight text-white">
                 <span className="text-gray-400">Tienda:</span> {item.store_name}
