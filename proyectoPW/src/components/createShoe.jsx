@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFetchDataPromise } from "../hooks/useFectchDataPromise";
 import { useFetchData } from "../hooks/useFectchData";
 import Loading from "./messages/loading";
@@ -12,37 +12,67 @@ const CreateShoe = () => {
     endPoint: "category/all",
   });
 
-  const [selectedBrand, setSelectedBrand] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedBrandId, setSelectedBrandId] = useState("");
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [image, setImage] = useState(null);
+  const [brandMap, setBrandMap] = useState(new Map());
+  const [categoryMap, setCategoryMap] = useState(new Map());
+
+  useEffect(() => {
+    console.log("Brands Data:", brandsData.data);
+    if (brandsData.data && Array.isArray(brandsData.data)) {
+      const brandMapping = new Map(
+        brandsData.data.map((brand) => [brand.name, brand.brand_id])
+      );
+      setBrandMap(brandMapping);
+      console.log("Brand Mapping:", brandMapping);
+    } else {
+      console.error("Brands data is not in the expected format.");
+    }
+
+    console.log("Categories Data:", categoriesData.data);
+    if (categoriesData.data && Array.isArray(categoriesData.data)) {
+      const categoryMapping = new Map(
+        categoriesData.data.map((category) => [
+          category.name,
+          category.category_id,
+        ])
+      );
+      setCategoryMap(categoryMapping);
+      console.log("Category Mapping:", categoryMapping);
+    } else {
+      console.error("Categories data is not in the expected format.");
+    }
+  }, [brandsData.data, categoriesData.data]);
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result); // Guardar la imagen como Base64
-      };
-      reader.readAsDataURL(file); // Convertir la imagen a Base64
+      setImage(file); // Guardar el archivo directamente
+      console.log("Selected Image File:", file);
     }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const shoeData = {
-      name: document.getElementById("shoe_id").value,
-      brand_id: selectedBrand,
-      fk_categoryshoes: selectedCategory,
-      image_url: image, // Imagen en Base64
-    };
+    const formData = new FormData();
+    formData.append("name", document.getElementById("shoe_id").value);
+    formData.append("brand_id", selectedBrandId);
+    formData.append("fk_categoryshoes", selectedCategoryId);
+    if (image) formData.append("image", image); // Agregar el archivo de imagen
 
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
     try {
       const userResult = await getFetchData({
         method: "POST",
         endPoint: "shoes/create",
-        additionalData: shoeData, // Enviando datos como un objeto JSON
+        additionalData: formData, // Enviando FormData en lugar de un objeto JSON
       });
+
+      console.log("Fetch Data Result:", userRefsult);
 
       if (userResult.code === "COD_OK") {
         console.log("Shoe created successfully!");
@@ -62,8 +92,8 @@ const CreateShoe = () => {
     return <ErrorMessage message="Error al cargar los datos." />;
   }
 
-  if (brandsData.data.length === 0 || categoriesData.data.length === 0) {
-    return <Message message="No hay datos disponibles." />;
+  if (!Array.isArray(brandsData.data) || !Array.isArray(categoriesData.data)) {
+    return <Message message="Datos no válidos." />;
   }
 
   return (
@@ -103,15 +133,18 @@ const CreateShoe = () => {
             <select
               id="brand_id"
               className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-black focus:text-black peer"
-              value={selectedBrand}
-              onChange={(e) => setSelectedBrand(e.target.value)}
+              onChange={(e) => {
+                const brandId = brandMap.get(e.target.value);
+                console.log("Selected Brand:", e.target.value, "ID:", brandId);
+                setSelectedBrandId(brandId);
+              }}
               required
             >
               <option className="text-[#fced44]" value="">
                 Escoger
               </option>
               {brandsData.data.map((brand) => (
-                <option key={brand.id} value={brand.id}>
+                <option key={brand.brand_id} value={brand.name}>
                   {brand.name}
                 </option>
               ))}
@@ -128,17 +161,25 @@ const CreateShoe = () => {
             <select
               id="category_id"
               className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-black focus:text-black peer"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={(e) => {
+                const categoryId = categoryMap.get(e.target.value);
+                console.log(
+                  "Selected Category:",
+                  e.target.value,
+                  "ID:",
+                  categoryId
+                );
+                setSelectedCategoryId(categoryId);
+              }}
               required
             >
               <option className="text-[#fced44]" value="">
                 Escoger
               </option>
               {categoriesData.data
-                .filter((category) => category.fk_categories === 30)
+                .filter((category) => category.fk_categories === 30) // Ajusta esto según tu lógica
                 .map((category) => (
-                  <option key={category.id} value={category.id}>
+                  <option key={category.id} value={category.name}>
                     {category.name}
                   </option>
                 ))}
@@ -198,9 +239,11 @@ const CreateShoe = () => {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="px-6 py-2.5 bg-black text-white rounded-full text-lg"
+              className="px-6 py-2.5 bg-black text-white rounded-full text-lg
+
+"
             >
-              Crear zapato
+              Crear Zapato
             </button>
           </div>
         </form>
