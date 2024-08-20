@@ -34,19 +34,19 @@ const HeaderForm = () => {
           {user ? (
             <div>
               <Link
-                onClick={handleLogout}
-                to="/"
-                className="sm:ml-4 sm:mb-0 mb-2 sm:inline-flex hidden items-top sm:px-4 px-3 sm:py-2 py-1 border border-[#fcf149] sm:text-sm text-xs font-medium rounded-lg bg-black text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400"
-              >
-                Cerrar Sesión
-              </Link>
-              <Link
                 to="/historial"
                 className="sm:ml-4 sm:mb-0 mb-2 sm:inline-flex hidden items-top sm:px-4 px-3 sm:py-2 py-1 border border-[#fcf149] sm:text-sm text-xs font-medium rounded-lg bg-black text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400"
               >
                 Perfil
               </Link>
 
+              <Link
+                onClick={handleLogout}
+                to="/"
+                className="sm:ml-4 sm:mb-0 mb-2 sm:inline-flex hidden items-top sm:px-4 px-3 sm:py-2 py-1 border border-[#fcf149] sm:text-sm text-xs font-medium rounded-lg bg-black text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400"
+              >
+                Cerrar Sesión
+              </Link>
             </div>
           ) : (
             <>

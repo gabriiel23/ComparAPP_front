@@ -23,7 +23,7 @@ const ErrorMessage = ({ message }) => {
                         strokeLinecap="round"
                     ></path>
                 </svg>
-                <p className="text-2xl "><span classNameName='font-bold'>ERROR</span> - Ha sucedido algo, por favor intente de nuevo mas tarde.</p>
+                <p className="text-2xl "><span className='font-bold'>ERROR</span> - Ha sucedido algo, por favor intente de nuevo mas tarde.</p>
             </div>
 
         </div>
