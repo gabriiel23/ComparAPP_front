@@ -51,49 +51,48 @@ const AboutForm = () => {
                     </a>
                 </section>
 
-                <hr className="my-24"/>
+                <hr className="my-24" />
 
                 <div className="flex flex-wrap">
                     <div className="flex flex-col sm:flex-row sm:gap-32 gap-20">
-                        <div data-aos="fade-right" className='sm:px-0 px-10'>
-                            <img 
-                                className="hover:scale-125 ease-in duration-150 rounded-full border-double border-4 border-white shadow-2xl shadow-[#a0e8de]" 
-                                src="https://media-bog2-2.cdn.whatsapp.net/v/t61.24694-24/403907459_802850258311458_6423515825016807957_n.jpg?ccb=11-4&oh=01_Q5AaIMlcpONMq_gOchow3b-JZsc-e1TrmdCyZzRyXK5wmfkl&oe=66C3630A&_nc_sid=5e03e0&_nc_cat=111" 
-                                alt="angel" 
+                        <div data-aos="fade-right" className='sm:w-1/3 w-full p-6'>
+                            <img
+                                className="hover:scale-125 ease-in duration-150 rounded-full border-double border-4 border-white shadow-2xl shadow-[#a0e8de]"
+                                src="https://media-bog2-2.cdn.whatsapp.net/v/t61.24694-24/403907459_802850258311458_6423515825016807957_n.jpg?ccb=11-4&oh=01_Q5AaIMlcpONMq_gOchow3b-JZsc-e1TrmdCyZzRyXK5wmfkl&oe=66C3630A&_nc_sid=5e03e0&_nc_cat=111"
+                                alt="angel"
                             />
                         </div>
 
-                        <div data-aos="fade-left" className='sm:px-0 px-4'>
+                        <div data-aos="fade-left" className='sm:w-2/3 w-full sm:px-0 px-4'>
                             <h1 className="text-5xl font-bold text-center text-[#fcf149]">Angel Sarango</h1> <br />
-                            <p className="text-white sm:text-lg text-base">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem sed odio laboriosam ea id dignissimos quia? Numquam, magnam officia velit quod dolore fugit vitae molestias explicabo voluptates cum minus nesciunt! <br />
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio eligendi voluptatum tempora rerum, iure repellat et voluptates iusto sed, dignissimos aut ex nam nemo perferendis soluta officia dolorem maxime. Ab?
+                            <p className="text-white sm:text-lg text-base">Ángel Sarango es un estudiante apasionado por el mundo de la programación y la tecnología en general. Actualmente, se encuentra cursando su cuarto semestre de estudios, donde ha demostrado un fuerte interés y dedicación en el aprendizaje de nuevas habilidades en este campo. Nacido en Saraguro y residente en Loja, Ángel tiene 29 años y se caracteriza por su soltería y sus variados intereses personales. Entre sus hobbies destacan jugar al fútbol, disfrutar de series, y seguir perfeccionando sus conocimientos en programación. Su compromiso con el desarrollo personal y profesional en tecnología lo define como un individuo proactivo y entusiasta en su campo.
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <hr className="my-24"/>
+                <hr className="my-24" />
 
                 <div className="flex flex-wrap">
                     <div className="flex flex-col sm:flex-row sm:gap-32 gap-20">
-                        <div className='sm:px-0 px-4'>
+                        <div className='sm:w-2/3 w-full sm:px-0 px-10'>
                             <h1 className="text-5xl font-bold text-center text-[#fcf149]">Gabriel Díaz</h1> <br />
-                            <p className="text-white sm:text-lg text-base">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem sed odio laboriosam ea id dignissimos quia? Numquam, magnam officia velit quod dolore fugit vitae molestias explicabo voluptates cum minus nesciunt! <br />
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio eligendi voluptatum tempora rerum, iure repellat et voluptates iusto sed, dignissimos aut ex nam nemo perferendis soluta officia dolorem maxime. Ab?
+                            <p className="text-white sm:text-lg text-base">Gabriel Diaz es un joven estudiante de 19 años que comparte el gusto por la programación. Nacido y residente en Loja, Gabriel se dedica a su formación en tecnología, mostrando un gran interés por adquirir nuevos conocimientos. Sus hobbies incluyen jugar al fútbol, disfrutar de videojuegos, ver películas, y constantemente buscar aprender cosas nuevas. Su entusiasmo por el aprendizaje y su energía juvenil lo destacan como un estudiante comprometido y curioso en su campo.
                             </p>
                         </div>
 
-                        <div className='sm:px-0 px-10'>
-                            <img 
-                                className="hover:scale-125 ease-in duration-150 rounded-full border-double border-4 border-white shadow-2xl shadow-[#a0e8de]" 
-                                src="https://media-bog2-2.cdn.whatsapp.net/v/t61.24694-24/454637400_898938408685638_1942642901733259627_n.jpg?ccb=11-4&oh=01_Q5AaIHHaQyfQ8N7cdOrmH1AcrSteBVnIooW7l_nf2nIfyHg5&oe=66C93326&_nc_sid=5e03e0&_nc_cat=108" 
-                                alt="gabriel" 
+                        <div className='sm:w-1/3 w-full p-6'>
+                            <img
+                                className="hover:scale-125 ease-in duration-150 rounded-full border-double border-4 border-white shadow-2xl shadow-[#a0e8de]"
+                                src="https://media-bog2-2.cdn.whatsapp.net/v/t61.24694-24/454637400_898938408685638_1942642901733259627_n.jpg?ccb=11-4&oh=01_Q5AaIHHaQyfQ8N7cdOrmH1AcrSteBVnIooW7l_nf2nIfyHg5&oe=66C93326&_nc_sid=5e03e0&_nc_cat=108"
+                                alt="gabriel"
                             />
                         </div>
                     </div>
                 </div>
-                
-                <hr className="mt-24"/>
+
+
+                <hr className="mt-24" />
 
             </div>
         </div>

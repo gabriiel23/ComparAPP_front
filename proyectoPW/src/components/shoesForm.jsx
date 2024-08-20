@@ -108,7 +108,7 @@ const ShoesForm = () => {
               Tienda
             </label>
             <select
-              id="underline_select_tienda"
+              id="tienda"
               className="block p-3 rounded-xl w-full text-sm text-gray-300 bg-transparent border-0 border-b-2 border-[#fcf149] dark:bg-black appearance-none focus:outline-none focus:ring-0 focus:border-[#7a7632] peer"
               value={selectedStore}
               onChange={(e) => setSelectedStore(e.target.value)}
@@ -127,7 +127,7 @@ const ShoesForm = () => {
               Marca
             </label>
             <select
-              id="underline_select_marca"
+              id="marca"
               className="block p-3 rounded-xl w-full text-sm text-gray-300 bg-transparent border-0 border-b-2 border-[#fcf149] dark:bg-black appearance-none focus:outline-none focus:ring-0 focus:border-[#7a7632] peer"
               value={selectedBrand}
               onChange={(e) => setSelectedBrand(e.target.value)}
@@ -146,7 +146,7 @@ const ShoesForm = () => {
               Categoria
             </label>
             <select
-              id="underline_select_categoria"
+              id="categoria"
               className="block p-3 rounded-xl w-full text-sm text-gray-300 bg-transparent border-0 border-b-2 border-[#fcf149] dark:bg-black appearance-none focus:outline-none focus:ring-0 focus:border-[#7a7632] peer"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}

@@ -9,19 +9,20 @@ const ShoeByStore = () => {
     <div className="bg-cover bg-[url('https://i.pinimg.com/736x/09/8b/02/098b02b3138104e753440a7655ac38d5.jpg')] min-h-screen py-12">
       {/* Sección de bienvenida */}
       <div className="bg-black shadow-md rounded-3xl max-w-6xl mx-auto p-8 ">
-        <div className="flex flex-row items-center py-6 space-x-8">
+
+        <div className="flex flex-col items-center py-6 space-x-8">
           <img
-            className="h-28 rounded-full border-2 border-[#fcf149]"
+            className="h-28 rounded-full border-2 border-[#fcf149] mb-8"
             src="https://t4.ftcdn.net/jpg/01/36/55/49/360_F_136554929_JG7RLQNfAKpAQlmRmdV7QhbEM1PDt6k2.jpg"
             alt=""
           />
           <h1 className="text-5xl font-extrabold text-center text-[#fcf149]">
-            Bienvenido a la tienda "
-            {storeData.length > 0 ? storeData[0].store_name : "Desconocido"}"
+            Bienvenido a la tienda "{storeData.length > 0 ? storeData[0].store_name : "Desconocido"}"
           </h1>
         </div>
+
         <div>
-          <p className="text-lg text-gray-200 text-center my-8">
+          <p className="text-lg text-gray-200 text-center my-4">
             En "{storeData.length > 0 ? storeData[0].store_name : "Desconocido"}
             ", nos dedicamos a ofrecerte los mejores zapatos para cualquier
             ocasión. Explora nuestra colección y encuentra el par perfecto que
