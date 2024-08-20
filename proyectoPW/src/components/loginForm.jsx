@@ -65,7 +65,7 @@ const LoginForm = () => {
         if (userRoleData.category_name === "admin") {
           navigate("/"); // Ruta para el dashboard de admin
         } else {
-          navigate("/tiendas"); // Ruta para el dashboard de usuario
+          navigate("/"); // Ruta para el dashboard de usuario
         }
       } else {
         console.error(
