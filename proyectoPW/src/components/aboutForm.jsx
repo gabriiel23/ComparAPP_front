@@ -58,7 +58,7 @@ const AboutForm = () => {
                         <div data-aos="fade-right" className='sm:w-1/3 w-full p-6'>
                             <img
                                 className="hover:scale-125 ease-in duration-150 rounded-full border-double border-4 border-white shadow-2xl shadow-[#a0e8de]"
-                                src="https://media-bog2-2.cdn.whatsapp.net/v/t61.24694-24/403907459_802850258311458_6423515825016807957_n.jpg?ccb=11-4&oh=01_Q5AaIMlcpONMq_gOchow3b-JZsc-e1TrmdCyZzRyXK5wmfkl&oe=66C3630A&_nc_sid=5e03e0&_nc_cat=111"
+                                src="../public/angelito.jpg"
                                 alt="angel"
                             />
                         </div>
