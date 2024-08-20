@@ -26,6 +26,10 @@ function CompareForm(props) {
   }, [searchTerm, data]);
 
   const handleShoeSelect = async (shoe_id) => {
+    console.log("handleShoeSelect called with shoe_id:", shoe_id);
+    const userId = localStorage.getItem("userId");
+    console.log("userId from localStorage:", userId);
+
     if (selectedShoes.length < 3) {
       try {
         const response = await getFetchData({
@@ -37,7 +41,27 @@ function CompareForm(props) {
         });
 
         if (response.code === "COD_OK") {
+          console.log("Shoe details fetched successfully:", response.data);
           setSelectedShoes([...selectedShoes, response.data]);
+
+          // Solo enviar los datos a history/create si el usuario está logueado
+          if (userId) {
+            const historyData = {
+              fk_shoes: shoe_id, // ID del zapato seleccionado
+              fk_user: userId, // ID del usuario desde localStorage
+              date: new Date().toISOString().split("T")[0], // Fecha actual en formato YYYY-MM-DD
+            };
+            console.log("Sending history data:", historyData);
+            await getFetchData({
+              endPoint: "history/create",
+              method: "POST",
+              additionalData: historyData,
+            });
+
+            console.log("History data sent successfully");
+          } else {
+            console.log("User not logged in, skipping history/create request.");
+          }
         } else {
           console.error("Error fetching shoe details:", response.message);
         }
