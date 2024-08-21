@@ -177,19 +177,28 @@ const ShoesForm = () => {
               {item.shoe_name}
             </h5>
             <div className="px-6">
-              <h5 className="mb-2 text-base font-semibold tracking-tight text-white">
-                <span className="text-gray-400">Marca:</span> {item.brand_name}
-              </h5>
-              <h5 className="mb-2 text-base font-semibold tracking-tight text-white">
-                <span className="text-gray-400">Categoría:</span>{" "}
-                {item.category_name}
-              </h5>
-              <h5 className="text-base font-semibold tracking-tight text-white">
-                <span className="text-gray-400">Tienda:</span> {item.store_name}
-              </h5>
-              <h5 className="text-3xl text-center font-bold text-green-500 pb-8">
-                <br /> ${item.price}
-              </h5>
+
+              <div className="flex flex-row items-center pb-4">
+                <span className="text-gray-400 font-medium ">Marca:</span> 
+                <h5 className="text-lg font-medium tracking-tight text-white ml-9"> {item.brand_name} </h5>
+              </div>
+
+              <div className="flex flex-row items-center pb-4">
+                <span className="text-gray-400 font-medium ">Categoría:</span> 
+                <h5 className="text-lg font-medium tracking-tight text-white ml-4"> {item.category_name} </h5>
+              </div>
+
+              <div className="flex flex-row items-center pb-4">
+                <span className="text-gray-400 font-medium ">Tienda:</span> 
+                <h5 className="text-lg font-medium tracking-tight text-white ml-9"> {item.store_name} </h5>
+              </div>
+
+              <hr className="border-[#fcf149] pb-8" />
+
+              <div className="bg-[#fcf149] mb-12 rounded-xl py-2">
+                <h5 className="text-3xl text-center font-bold"> ${item.price} </h5>
+              </div>
+
             </div>
           </div>
         ))}
