@@ -41,7 +41,7 @@ const CreateStore = () => {
   return (
     <div>
       <div className='bg-gray-200 sm:mx-96 mx-4 sm:px-0 px-4'>
-        <div className="flex justify-center pt-16">
+        <div className="flex justify-center pt-24">
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9aoZ9TNrc_pinClu1h-pKIgULddYoky9hvw&s"
             alt=""
@@ -49,7 +49,7 @@ const CreateStore = () => {
           />
         </div>
 
-        <h1 className="text-center text-4xl font-bold mt-6 mb-10">Crear una nueva tienda</h1>
+        <h1 className="text-center text-4xl font-bold mt-6 mb-14">Crear una nueva tienda</h1>
 
         <form className="max-w-md mx-auto pb-14" onSubmit={handleSubmit(onSubmitStoreInfo)}>
           <div className="relative z-0 w-full mb-10 group">
