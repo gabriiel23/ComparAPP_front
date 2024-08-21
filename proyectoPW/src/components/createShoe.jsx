@@ -4,8 +4,10 @@ import { useFetchData } from "../hooks/useFectchData";
 import Loading from "./messages/loading";
 import ErrorMessage from "./messages/errorMessage";
 import Message from "./messages/messages";
+import { useNavigate } from "react-router-dom";
 
 const CreateShoe = () => {
+  const navigate = useNavigate();
   const { getFetchData } = useFetchDataPromise();
   const { fetchData: brandsData } = useFetchData({ endPoint: "brand/all" });
   const { fetchData: categoriesData } = useFetchData({
@@ -55,29 +57,36 @@ const CreateShoe = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
+    if (!selectedBrandId || !selectedCategoryId || !image) {
+      console.error("Todos los campos son obligatorios.");
+      return;
+    }
+  
     const formData = new FormData();
     formData.append("name", document.getElementById("shoe_id").value);
     formData.append("brand_id", selectedBrandId);
     formData.append("fk_categoryshoes", selectedCategoryId);
-    if (image) formData.append("image", image); // Agregar el archivo de imagen
-
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
+    if (FormData.image) {
+      formData.append('image', FormData.image);
     }
+  
     try {
       const userResult = await getFetchData({
         method: "POST",
         endPoint: "shoes/create",
-        additionalData: formData, // Enviando FormData en lugar de un objeto JSON
+        additionalData: formData,
       });
-
-      console.log("Fetch Data Result:", userRefsult);
-
+  
+      console.log("Fetch Data Result:", userResult);
+  
       if (userResult.code === "COD_OK") {
-        console.log("Shoe created successfully!");
+        console.log("Zapato creado satisfactoriamente!");
+        alert("FELICIDADES, el zapato se ha creado correctamente.")
       } else {
-        console.error("Error creating shoe:", userResult.message);
+        console.error("Error al crear el zapato:", userResult.message);
+        alert("ERROR, no se pudo crear el zapato, intente de nuevo mas tarde.")
+        navigate("/zapatos")
       }
     } catch (error) {
       console.error("Error sending data:", error);

@@ -4,10 +4,9 @@ import Loading from "./messages/loading";
 import ErrorMessage from "./messages/errorMessage";
 import Message from "./messages/messages";
 import { Link } from "react-router-dom";
-import { useAuth } from "../hooks/AuthContext"; // Importa el hook del contexto
+import { useAuth } from "../hooks/AuthContext";
 
 const ShoesForm = () => {
-  // Fetching initial shoes data
   const {
     fetchData: {
       loading: loadingShoes,
@@ -17,23 +16,18 @@ const ShoesForm = () => {
     },
   } = useFetchData({ endPoint: "shoesprice" });
 
-  // Fetching stores, brands, and categories
   const { fetchData: storesData } = useFetchData({ endPoint: "store/getAll" });
   const { fetchData: brandsData } = useFetchData({ endPoint: "brand/all" });
-  const { fetchData: categoriesData } = useFetchData({
-    endPoint: "category/all",
-  });
+  const { fetchData: categoriesData } = useFetchData({ endPoint: "category/all" });
 
-  // State for filters
   const [selectedStore, setSelectedStore] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [filteredShoes, setFilteredShoes] = useState([]);
+  const [visibleShoes, setVisibleShoes] = useState(8); // Número de zapatos visibles
 
-  // Get user role from context
   const { user } = useAuth();
 
-  // Filter shoes based on selected options
   useEffect(() => {
     if (shoesData) {
       let filtered = shoesData;
@@ -45,14 +39,19 @@ const ShoesForm = () => {
         filtered = filtered.filter((shoe) => shoe.brand_name === selectedBrand);
       }
       if (selectedCategory) {
-        filtered = filtered.filter(
-          (shoe) => shoe.category_name === selectedCategory
-        );
+        filtered = filtered.filter((shoe) => shoe.category_name === selectedCategory);
       }
 
       setFilteredShoes(filtered);
     }
   }, [selectedStore, selectedBrand, selectedCategory, shoesData]);
+
+  const handleLoadMore = () => {
+    setVisibleShoes((prevVisibleShoes) => prevVisibleShoes + 8);
+  };
+  const handleLoadLess = () => {
+    setVisibleShoes((prevVisibleShoes) => prevVisibleShoes - 4);
+  }
 
   if (
     loadingShoes ||
@@ -73,7 +72,7 @@ const ShoesForm = () => {
 
   return (
     <div className="bg-cover bg-no-repeat bg-[url('https://img.freepik.com/premium-photo/old-black-background-grunge-texture-dark-wallpaper-blackboard-chalkboard-room-wall_481606-89.jpg')]">
-      <div className="relative flex flex-col items-center pt-24">
+      <div className="relative flex flex-col items-center pt-24 mx-20">
         <div className="relative z-10">
           <h1
             id="tituloo"
@@ -87,7 +86,6 @@ const ShoesForm = () => {
         </div>
       </div>
 
-      {/* Mostrar enlace solo si el rol del usuario es admin */}
       {user?.role === "admin" && (
         <div className="flex justify-center mt-6">
           <Link
@@ -165,10 +163,10 @@ const ShoesForm = () => {
       </div>
 
       <div className="flex flex-wrap justify-center gap-8 pb-16 sm:px-48 px-0">
-        {filteredShoes.map((item) => (
+        {filteredShoes.slice(0, visibleShoes).map((item, index) => (
           <div
             className="w-60 bg-black border border-[#fcf149] rounded-lg shadow"
-            key={item.shoe_id}
+            key={`${item.shoe_id}-${index}`}
           >
             <img
               className="p-8 rounded-t-lg"
@@ -196,6 +194,33 @@ const ShoesForm = () => {
           </div>
         ))}
       </div>
+
+      <div className="flex sm:flex-row flex-col justify-center gap-6">
+        {/* Botón para cargar más zapatos */}
+        {visibleShoes < filteredShoes.length && (
+          <div className="flex justify-center sm:pb-12">
+            <button
+              onClick={handleLoadMore}
+              className="bg-black text-[#fced44] border-2 border-[#fced44] hover:bg-gray-900 px-6 py-3 rounded-xl font-semibold"
+            >
+              Cargar más
+            </button>
+          </div>
+        )}
+
+        {/* Botón para cargar menos zapatos */}
+        {visibleShoes < filteredShoes.length && (
+          <div className="flex justify-center pb-12">
+            <button
+              onClick={handleLoadLess}
+              className="bg-black text-[#fced44] border-2 border-[#fced44] hover:bg-gray-900 px-6 py-3 rounded-xl font-semibold"
+            >
+              Cargar menos
+            </button>
+          </div>
+        )}
+      </div>
+
     </div>
   );
 };
