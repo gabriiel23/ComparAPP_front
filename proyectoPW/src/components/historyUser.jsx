@@ -2,55 +2,46 @@ import React, { useState, useEffect } from "react";
 import Loading from "./messages/loading";
 import ErrorMessage from "./messages/errorMessage";
 import { useAuth } from "../hooks/AuthContext";
-import { useFetchDataPromise } from "../hooks/useFectchDataPromise"; // Asegúrate de que el hook esté correctamente importado
-import { useFetchData } from "../hooks/useFectchData";
+import { useFetchData } from "../hooks/useFectchData"; // Asegúrate de que este hook esté definido
 
 const HistoryUser = () => {
   const { user } = useAuth(); // Obtén los datos del usuario desde el contexto de autenticación
   const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [historyData, setHistoryData] = useState([]);
+  const [visibleItems, setVisibleItems] = useState(5); // Inicialmente muestra 5 elementos
 
-  const { getFetchData } = useFetchDataPromise(); // Hook personalizado para manejar las solicitudes HTTP
+  // Destructura las respuestas del hook useFetchData
+  const { fetchData: userFetchData } = useFetchData({ endPoint: `user/getById/${localStorage.getItem("userId")}` });
+  const { fetchData: historyFetchData } = useFetchData({ endPoint: `historiuser/${localStorage.getItem("userId")}` });
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchData = async () => {
       try {
-        const userId = localStorage.getItem("userId");
+        // Datos del usuario
+        if (userFetchData.loading) return; // Maneja el estado de carga
+        if (userFetchData.code !== "COD_OK") throw new Error(userFetchData.message);
 
-        if (!userId) {
-          throw new Error("No se encontró el ID del usuario.");
-        }
+        setUserData(userFetchData.data[0]);
 
-        const response = await getFetchData({
-          method: "POST", // Verifica que el método de tu API sea correcto, en algunos casos debe ser 'GET'
-          endPoint: `user/getById/${userId}`,
-        });
+        // Historial de búsqueda
+        if (historyFetchData.loading) return; // Maneja el estado de carga
+        if (historyFetchData.code !== "COD_OK") throw new Error(historyFetchData.message);
 
-        console.log("FFD", response);
-
-        // Cambia la verificación de código para que coincida con 'COD_OK'
-        if (response.code !== "COD_OK") {
-          throw new Error(
-            response.message || "Error al obtener los datos del usuario."
-          );
-        }
-
-        // Como response.data es un array, accede al primer elemento
-        const userData = response.data[0];
-        setUserData(userData); // Establece los datos del usuario en el estado
-        setLoading(false);
+        setHistoryData(historyFetchData.data); // Almacena el historial de búsqueda
       } catch (error) {
-        setError(error.message);
-        setLoading(false);
+        console.error(error.message); // Manejo de errores
       }
     };
 
-    fetchUserData();
-  }, [getFetchData]);
+    fetchData();
+  }, [userFetchData, historyFetchData]);
 
-  if (loading) return <Loading />;
-  if (error) return <ErrorMessage message={error} />;
+  const loadMore = () => {
+    setVisibleItems((prev) => prev + 5); // Muestra 5 elementos más
+  };
+
+  if (userFetchData.loading || historyFetchData.loading) return <Loading />;
+  if (userFetchData.code !== "COD_OK" || historyFetchData.code !== "COD_OK") return <ErrorMessage message={userFetchData.message || historyFetchData.message} />;
 
   return (
     <div className="flex flex-row gap-12 my-24 px-32">
@@ -62,67 +53,49 @@ const HistoryUser = () => {
               src="https://st3.depositphotos.com/3538469/15750/i/450/depositphotos_157501024-stock-photo-business-man-icon.jpg"
               alt="FotoPerfil"
             />
-            <h5 className="my-2 text-lg font-medium text-black">
-              Datos Usuario
-            </h5>
-            <span className="my-2 text-sm font-medium text-black">
-              {userData.name} {userData.lastname}
-            </span>{" "}
-            {/* Muestra nombre y apellido */}
-            <span className="my-2 text-sm font-medium text-black">
-              {user.role}
-            </span>{" "}
-            {/* Muestra el rol almacenado en localStorage */}
-            <span className="my-2 text-sm font-medium text-black">
-              {userData.email}
-            </span>{" "}
-            {/* Muestra el email */}
-            <span className="my-2 text-sm font-medium text-black">
-              {new Date(userData.birthday_date).toLocaleDateString()}
-            </span>{" "}
-            {/* Muestra la fecha de nacimiento en un formato legible */}
-            {/* Puedes añadir más datos del usuario aquí */}
+            <h5 className="my-2 text-lg font-medium text-black">Datos Usuario</h5>
+            <span className="my-2 text-sm font-medium text-black">{userData?.name} {userData?.lastname}</span>
+            <span className="my-2 text-sm font-medium text-black">{user?.role}</span>
+            <span className="my-2 text-sm font-medium text-black">{userData?.email}</span>
+            <span className="my-2 text-sm font-medium text-black">{userData?.birthday_date ? new Date(userData.birthday_date).toLocaleDateString() : ""}</span>
           </div>
         </div>
       </div>
 
       <div id="History" className="w-2/3">
         <div className="mb-8">
-          <h1 className="text-center text-4xl font-bold">
-            Historial del usuario
-          </h1>
-          <p className="text-center text-lg">
-            Aquí podrás ver las búsquedas que ha realizado el usuario
-          </p>
+          <h1 className="text-center text-4xl font-bold">Historial del usuario</h1>
+          <p className="text-center text-lg">Aquí podrás ver las búsquedas que ha realizado el usuario</p>
         </div>
 
-        {/* Aquí puedes añadir la lógica para mostrar el historial de búsqueda */}
-        <div className="">
-          <div className="p-8 bg-gray-100 rounded-3xl">
-            <div className="">
-              <p className="font-semibold text-lg leading-8 text-indigo-600 mb-8">
-                Búsquedas:
-              </p>
-            </div>
-
-            <div className="flex sm:flex-row flex-col sm:gap-20 gap-0">
-              <div className="flex-grow">
-                <img src="" alt="imagenZapa" className="rounded-xl" />
-              </div>
-
-              <div className="flex-grow">
-                <h5 className="font-medium text-lg text-black ">
-                  "Nombre del zapato que buscó"
-                </h5>
-              </div>
-
-              <div className="flex-grow">
-                <p className="font-medium text-lg text-black">
-                  "Hora en que realizó la búsqueda"
-                </p>
-              </div>
-            </div>
+        <div className="p-8 bg-gray-100 rounded-3xl">
+          <div className="">
+            <p className="font-semibold text-lg leading-8 text-indigo-600 mb-8">Búsquedas:</p>
           </div>
+
+          {historyData.length === 0 ? (
+            <p className="text-center text-lg">No se encontraron búsquedas.</p>
+          ) : (
+            historyData.slice(0, visibleItems).map((item, index) => (
+              <div key={index} className="flex sm:flex-row flex-col sm:gap-20 gap-0 mb-4">
+                <div className="flex-grow">
+                  <img src={item.image_url} alt={`Imagen de ${item.shoe_name}`} className="rounded-xl" />
+                </div>
+                <div className="flex-grow">
+                  <h5 className="font-medium text-lg text-black">{item.shoe_name}</h5>
+                </div>
+                <div className="flex-grow">
+                  <p className="font-medium text-lg text-black">{new Date(item.consultation_date).toLocaleDateString()}</p>
+                </div>
+              </div>
+            ))
+          )}
+
+          {visibleItems < historyData.length && (
+            <div className="text-center mt-8">
+              <button onClick={loadMore} className="px-6 py-2 bg-blue-500 text-white font-bold rounded-lg">Cargar más</button>
+            </div>
+          )}
         </div>
       </div>
     </div>
