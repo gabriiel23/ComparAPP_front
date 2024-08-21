@@ -27,7 +27,12 @@ const HistoryUser = () => {
         if (historyFetchData.loading) return; // Maneja el estado de carga
         if (historyFetchData.code !== "COD_OK") throw new Error(historyFetchData.message);
 
-        setHistoryData(historyFetchData.data); // Almacena el historial de búsqueda
+        // Ordenar por fecha de consulta en orden descendente
+        const sortedHistory = historyFetchData.data.sort(
+          (a, b) => new Date(b.consultation_date) - new Date(a.consultation_date)
+        );
+
+        setHistoryData(sortedHistory); // Almacena el historial de búsqueda
       } catch (error) {
         console.error(error.message); // Manejo de errores
       }
